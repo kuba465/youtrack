@@ -24,6 +24,10 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::prefix('user')->group(function (){
+Route::prefix('project')->group(function () {
+    Route::get('/{project}', 'ProjectController@details')->name('project.details');
+});
+
+Route::prefix('user')->group(function () {
     Route::get('/{user}', 'UserController@details')->name('user.details');
 });

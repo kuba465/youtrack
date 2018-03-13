@@ -8,16 +8,16 @@
     </thead>
     <tbody>
         <tr>
-            <th class="col-11">Name</th>
+            <th>Name</th>
         </tr>
-        @forelse($user->projects as $project)
-            <tr>
-                <td>{{$project->name}}</td>
-            </tr>
-        @empty
-            <tr>
-                <td colspan="2">@lang('main.user.no_projects')</td>
-            </tr>
-        @endforelse
+            @forelse($user->projects as $project)
+                <tr>
+                    <td>{{$project->name}}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="2">@lang('main.user.no_projects')</td>
+                </tr>
+            @endforelse
     </tbody>
 </table>

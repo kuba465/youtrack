@@ -16,6 +16,7 @@ class CreateIssuesTable extends Migration
         Schema::create('issues', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('project_id')->unsigned();
             $table->string('title');
             $table->text('description');
             $table->integer('status_id')->default(1)->unsigned();

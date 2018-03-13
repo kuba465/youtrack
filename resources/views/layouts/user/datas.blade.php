@@ -25,7 +25,7 @@
             <td>{{$user->updated_at}}</td>
         </tr>
         <tr>
-            <th>My role</th>
+            <th>Role</th>
             <td>{{$user->roles[0]->description}}</td>
         </tr>
     </tbody>
