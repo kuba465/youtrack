@@ -15,4 +15,9 @@ class Issue extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }

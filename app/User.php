@@ -36,6 +36,15 @@ class User extends Authenticatable
     }
 
     /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        $roles = $this->roles();
+        return $roles->first();
+    }
+
+    /**
      * @param string|array $roles
      * @return bool
      */
@@ -51,7 +60,7 @@ class User extends Authenticatable
      * @param array $roles
      * @return bool
      */
-    private function hasAnyRole($roles)
+    public function hasAnyRole($roles)
     {
         return null !== $this->roles()->whereIn('name', $roles)->first();
     }
@@ -60,7 +69,7 @@ class User extends Authenticatable
      * @param string $role
      * @return bool
      */
-    private function hasRole($role)
+    public function hasRole($role)
     {
         return null !== $this->roles()->where('name', $role)->first();
     }
@@ -68,5 +77,10 @@ class User extends Authenticatable
     public function issues()
     {
         return $this->hasMany(Issue::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_members');
     }
 }
