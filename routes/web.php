@@ -17,10 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware(['admin'])->prefix('admin')->group(function () {
-    Route::get('/', 'AdminController@index');
-});
-
 
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -30,4 +26,10 @@ Route::prefix('project')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::get('/{user}', 'UserController@details')->name('user.details');
+});
+
+Route::middleware('role:admin')->prefix('admin')->group(function () {
+    Route::get('/', 'AdminController@index');
+    Route::resource('permission', 'Admin\\PermissionController');
+    Route::resource('role', 'Admin\\RoleController');
 });

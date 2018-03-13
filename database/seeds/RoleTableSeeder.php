@@ -1,7 +1,7 @@
 <?php
 
-use App\Role;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class RoleTableSeeder extends Seeder
 {
@@ -12,19 +12,13 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        $admin = new Role();
-        $admin->name = 'admin';
-        $admin->description = 'Administrator';
+        $admin = Role::create(['name' => 'admin']);
         $admin->save();
 
-        $projectManager = new Role();
-        $projectManager->name = 'project_manager';
-        $projectManager->description = 'Project Manager/Team Leader';
+        $projectManager = Role::create(['name' => 'project_manager']);
         $projectManager->save();
 
-        $member = new Role();
-        $member->name = 'member';
-        $member->description = 'Member of project';
+        $member = Role::create(['name' => 'project_member']);
         $member->save();
     }
 }

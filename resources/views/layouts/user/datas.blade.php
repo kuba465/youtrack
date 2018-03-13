@@ -24,9 +24,9 @@
             <th>Updated At</th>
             <td>{{$user->updated_at}}</td>
         </tr>
-        <tr>
-            <th>Role</th>
-            <td>{{$user->roles[0]->description}}</td>
-        </tr>
+        {{--<tr>--}}
+            {{--<th>Role</th>--}}
+            {{--<td>{{$user->roles[0]->description}}</td>--}}
+        {{--</tr>--}}
     </tbody>
 </table>
