@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/css/bootstrap-dialog.min.css" />
 </head>
 <body>
     <div id="app">
@@ -37,21 +38,24 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
+                            @if(auth()->user()->hasPermissionTo('add.roles.and.permissions'))
+                                <li><a class="nav-link" href="{{ route('role.index') }}">{{ __('Roles') }}</a></li>
+                                <li><a class="nav-link" href="{{ route('permission.index') }}">{{ __('Permissions') }}</a></li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('user.details', ['user' => auth()->user()]) }}">
+                                        @lang('main.user.myDetails')
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('user.details', ['user' => auth()->user()]) }}">
-                                        @lang('main.user.myDetails')
-                                    </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -69,6 +73,11 @@
     </div>
 
     <!-- Scripts -->
+
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('bootstrap-dialog/js/bootstrap-dialog.js') }}"></script>
+    <script src="{{ asset('script.js') }}"></script>
+
 </body>
 </html>
+

@@ -8,8 +8,10 @@ return [
     'admin' => [
         'projects' => 'All projects',
         'users' => 'All users',
+        'issues' => 'All issues',
         'no_projects' => 'There are no projects',
-        'no_users' => 'There are no users'
+        'no_users' => 'There are no users',
+        'no_issues' => 'There are no issues'
     ],
 
     'user' => [

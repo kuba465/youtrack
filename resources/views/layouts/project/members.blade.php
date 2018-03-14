@@ -3,7 +3,7 @@
         <tr>
             <th colspan="2" class="text-center">
                 Members
-                @if(auth()->user()->getRole()->id !== 3)
+                @if(auth()->user()->can('add.members.to.project'))
                     <div class="float-right">
                         <button id="addMember" class="btn btn-success btn-sm">
                             Add Member

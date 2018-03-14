@@ -3,14 +3,16 @@
         <tr>
             <th colspan="2" class="text-center">
                 Project Details
-                @if(auth()->user()->getRole()->id !== 3)
+                @if(auth()->user()->can('edit.project'))
                     <div class="float-right">
-                        <button id="editUserBtn" class="btn btn-warning btn-sm">
+                        <button id="editProjectBtn" class="btn btn-warning btn-sm">
                             Edit
                         </button>
-                        <button id="deleteUserBtn" class="btn btn-danger btn-sm">
-                            Delete
-                        </button>
+                        @if(auth()->user()->can('delete.project'))
+                            <button id="deleteProjectBtn" class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+                        @endif
                     </div>
                 @endif
             </th>

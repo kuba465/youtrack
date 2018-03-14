@@ -8,7 +8,7 @@
                     <div class="card-header">
                         @lang('main.admin.projects')
                         <div class="float-right">
-                            <button id="addProject" class="btn btn-success btn-md">
+                            <button id="addProject" class="btn btn-success btn-md" data-toggle="modal" data-target="#addProjectForm">
                                 Add Project
                             </button>
                         </div>
@@ -25,6 +25,7 @@
                     </div>
                 </div>
             </div>
+            @include('modals.createProject')
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
@@ -49,9 +50,18 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header">@lang('main.dashboard.header')</div>
+                    <div class="card-header">
+                        @lang('main.admin.issues')
+                    </div>
                     <div class="card-body">
-                        You are logged in!
+                        @forelse($issues as $issue)
+                            <a href="{{route('issue.details', ['issue' => $issue])}}"
+                               class="list-group-item list-group-item-action list-group-item-success">
+                                {{$loop->iteration}}. {{$issue->title}}
+                            </a>
+                        @empty
+                            @lang('main.admin.no_issues')
+                        @endforelse
                     </div>
                 </div>
             </div>

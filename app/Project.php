@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+
+    protected $fillable = [
+        'name', 'project_manager'
+    ];
+
     public function issues()
     {
         return $this->hasMany(Issue::class);

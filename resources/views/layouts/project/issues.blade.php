@@ -3,9 +3,9 @@
         <tr>
             <th colspan="2" class="text-center">
                 Issues
-                @if(auth()->user()->getRole()->id !== 3)
+                @if(auth()->user()->can('add.issue.to.project'))
                     <div class="float-right">
-                        <button id="addMember" class="btn btn-success btn-sm">
+                        <button id="addIssue" class="btn btn-success btn-sm">
                             Add Issue
                         </button>
                     </div>

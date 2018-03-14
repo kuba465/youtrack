@@ -15,4 +15,14 @@ class ProjectController extends Controller
     {
         return view('layouts.project.details', compact('project'));
     }
+
+    public function create(Request $request)
+    {
+        $validation = $request->validate([
+            'name' => 'required|max:255',
+            'projectManager' => 'nullable|integer'
+        ]);
+        $project = Project::create($request->all());
+        return redirect()->route('project.details', compact('project'));
+    }
 }
