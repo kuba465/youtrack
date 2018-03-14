@@ -5,11 +5,11 @@
                 Project Details
                 @if(auth()->user()->can('edit.project'))
                     <div class="float-right">
-                        <button id="editProjectBtn" class="btn btn-warning btn-sm">
+                        <button id="editProjectBtn" data-project="{{$project->id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editProjectForm">
                             Edit
                         </button>
                         @if(auth()->user()->can('delete.project'))
-                            <button id="deleteProjectBtn" class="btn btn-danger btn-sm">
+                            <button id="deleteProjectBtn" data-project="{{$project->id}}" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteProjectForm">
                                 Delete
                             </button>
                         @endif
@@ -21,7 +21,11 @@
     <tbody>
         <tr>
             <th>Name</th>
-            <td>{{$project->name}}</td>
+            <td id="name">{{$project->name}}</td>
+        </tr>
+        <tr>
+            <th>Project Manager</th>
+            <td id="manager">{{!empty($project->projectManager) ? $project->projectManager->name : ''}}</td>
         </tr>
         <tr>
             <th>Created At</th>
@@ -33,3 +37,5 @@
         </tr>
     </tbody>
 </table>
+@include('modals.editProject')
+@include('modals.deleteProject')

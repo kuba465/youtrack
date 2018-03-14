@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        @include('errors')
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="card">
@@ -31,7 +32,7 @@
                     <div class="card-header">
                         @lang('main.admin.users')
                         <div class="float-right">
-                            <button id="addUser" class="btn btn-success btn-md">
+                            <button id="addUser" class="btn btn-success btn-md" data-toggle="modal" data-target="#addUserForm">
                                 Add User
                             </button>
                         </div>
@@ -48,6 +49,7 @@
                     </div>
                 </div>
             </div>
+            @include('modals.createUser')
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">

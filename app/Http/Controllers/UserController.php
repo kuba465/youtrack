@@ -15,4 +15,25 @@ class UserController extends Controller
     {
         return view('layouts.user.details', compact('user'));
     }
+
+    /**
+     * @param Request $request
+     */
+    public function create(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+        ]);
+        $user->assignRole('project_member');
+
+        return back();
+    }
 }

@@ -23,10 +23,13 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::prefix('project')->group(function () {
     Route::get('/{project}', 'ProjectController@details')->name('project.details');
     Route::post('/create', 'ProjectController@create')->name('project.create')->middleware('role:admin');
+    Route::post('/edit', 'ProjectController@edit')->name('project.edit')->middleware('permission:edit.project');
+    Route::get('/delete/{project}', 'ProjectController@delete')->name('project.delete')->middleware('permission:delete.project');
 });
 
 Route::prefix('user')->group(function () {
     Route::get('/{user}', 'UserController@details')->name('user.details');
+    Route::post('/create', 'UserController@create')->name('user.create')->middleware('role:admin');
 });
 
 Route::prefix('issue')->group(function () {
@@ -34,7 +37,7 @@ Route::prefix('issue')->group(function () {
 });
 
 Route::middleware('role:admin')->prefix('admin')->group(function () {
-    Route::get('/', 'AdminController@index');
+    Route::get('/', 'AdminController@index')->name('admin.index');
     Route::resource('permission', 'Admin\\PermissionController');
     Route::resource('role', 'Admin\\RoleController');
 });
