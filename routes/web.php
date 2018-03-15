@@ -27,6 +27,7 @@ Route::prefix('/project')->group(function () {
     Route::get('/delete/{project}', 'ProjectController@delete')->name('project.delete')->middleware('permission:delete.project');
     Route::post('/{project}/addMember/{member?}', 'ProjectController@addMember')->name('project.addMember');
     Route::post('/{project}/addMemberForm', 'ProjectController@addMemberForm')->name('project.addMember.form');
+    Route::post('/{project}/getDeleteMemberLink/{member}', 'ProjectController@getDeleteMemberLink')->name('project.getDeleteMemberLink');
     Route::delete('/{project}/deleteMember/{member}', 'ProjectController@deleteMember')->name('project.deleteMember');
 });
 

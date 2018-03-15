@@ -90,9 +90,16 @@ class ProjectController extends Controller
     {
         $projectMembers = User::projectMembers($project)->get();
         $form = view('modals.addMemberForm', compact('projectMembers'))->render();
-
         return response()->json([
             'form' => $form
+        ]);
+    }
+
+    public function getDeleteMemberLink(Project $project, User $member)
+    {
+        $link = route('project.deleteMember', ['project' => $project, 'member' => $member]);
+        return response()->json([
+            'link' => $link
         ]);
     }
 

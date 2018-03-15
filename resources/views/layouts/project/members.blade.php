@@ -24,17 +24,24 @@
             <tr>
                 <td>{{$member->name}}</td>
                 <td>{{$member->email}}</td>
-                @if(auth()->user()->can('remove.member.from.project'))
-                    <td>
-                        <div class="float-right">
-                            <button class="btn btn-danger btn-sm" id="deleteMemberBtn"
+                <td>
+                    <div class="float-right">
+                        @if(auth()->user()->can('edit.all.users'))
+                            <button class="btn btn-warning btn-sm"
                                     data-delete="{{route('project.deleteMember', ['project' => $project->id, 'member' => $member->id])}}"
+                                    data-toggle="modal" data-target="#editUserForm">
+                                Edit User
+                            </button>
+                        @endif
+                        @if(auth()->user()->can('remove.member.from.project'))
+                            <button class="btn btn-danger btn-sm" onclick="getDeleteMemberLink($(this))"
+                                    data-link="{{route('project.getDeleteMemberLink', ['project' => $project->id, 'member' => $member->id])}}"
                                     data-toggle="modal" data-target="#deleteMemberForm">
                                 Delete Member
                             </button>
-                        </div>
-                    </td>
-                @endif
+                        @endif
+                    </div>
+                </td>
             </tr>
         @empty
             <tr id="no_members">
@@ -43,6 +50,9 @@
         @endforelse
     </tbody>
 </table>
+@if(auth()->user()->can('edit.all.users'))
+    @include('modals.editUser')
+@endif
 @if(auth()->user()->can('remove.member.from.project'))
     @include('modals.deleteMember')
 @endif

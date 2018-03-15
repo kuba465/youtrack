@@ -55,12 +55,12 @@ function addMember() {
         }
     }).done(function (datas) {
         $('tr#no_members').remove();
-        var button = $('<button></button>');
-        button.addClass('btn btn-danger btn-sm');
-        button.attr('data-delete', datas.url);
-        button.attr('data-toggle', 'modal');
-        button.attr('data-target', '#deleteMemberForm');
-        button.text('Delete Member');
+        var buttonDelete = $('<button></button>');
+        buttonDelete.addClass('btn btn-danger btn-sm');
+        buttonDelete.attr('data-delete', datas.url);
+        buttonDelete.attr('data-toggle', 'modal');
+        buttonDelete.attr('data-target', '#deleteMemberForm');
+        buttonDelete.text('Delete Member');
 
         var div = $('<div></div>');
         div.addClass('float-right');
@@ -74,7 +74,7 @@ function addMember() {
 
         var tr = $('<tr></tr>');
 
-        button.appendTo(div);
+        buttonDelete.appendTo(div);
         div.appendTo(tdWithButton);
         tdWithName.appendTo(tr);
         tdWithEmail.appendTo(tr);
@@ -84,15 +84,24 @@ function addMember() {
     })
 }
 
+function getDeleteMemberLink(button) {
+    $.ajax({
+        method: "POST",
+        url: button.attr('data-link')
+    }).done(function (link) {
+        $('#deleteMember').attr('data-delete', link.link);
+    })
+}
+
 function deleteMember() {
-    var deleteBtn = $('#deleteMemberBtn');
-    var url = deleteBtn.attr('data-delete');
+    var button = $(this);
+    var url = button.attr('data-delete');
 
     $.ajax({
         method: "DELETE",
         url: url
     }).done(function (datas) {
-        deleteBtn.closest('tr').remove();
+        button.closest('tr').remove();
         $('#deleteMemberForm').modal('hide');
     })
 }
