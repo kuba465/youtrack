@@ -12,13 +12,13 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        $admin = Role::create(['name' => 'admin']);
+        $admin = Role::create(['name' => 'admin', 'description' => 'Administrator']);
         $admin->save();
 
-        $projectManager = Role::create(['name' => 'project_manager']);
+        $projectManager = Role::create(['name' => 'project_manager', 'description' => 'Project manager/Team Leader']);
         $projectManager->save();
 
-        $member = Role::create(['name' => 'project_member']);
+        $member = Role::create(['name' => 'project_member', 'description' => 'Project member']);
         $member->save();
     }
 }

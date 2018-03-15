@@ -32,12 +32,12 @@
                     <div class="card-header">
                         @lang('main.admin.users')
                         <div class="float-right">
-                            <button id="addUser" class="btn btn-success btn-md" data-toggle="modal" data-target="#addUserForm">
-                                Add User
+                            <button id="createUserBtn" class="btn btn-success btn-md" data-toggle="modal" data-target="#createUserForm">
+                                Create User
                             </button>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" id="users">
                         @forelse($users as $user)
                             <a href="{{route('user.details', ['user' => $user])}}"
                                class="list-group-item list-group-item-action list-group-item-primary">

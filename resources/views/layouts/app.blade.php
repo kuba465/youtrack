@@ -77,6 +77,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('bootstrap-dialog/js/bootstrap-dialog.js') }}"></script>
     <script src="{{ asset('js/project/script.js') }}"></script>
+    <script src="{{ asset('js/user/script.js') }}"></script>
 
 </body>
 </html>

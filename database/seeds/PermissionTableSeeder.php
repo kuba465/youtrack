@@ -50,5 +50,19 @@ class PermissionTableSeeder extends Seeder
         $admin->givePermissionTo($permission);
         $projectManager->givePermissionTo($permission);
         $projectMember->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => 'create.projectManager']);
+        $permission->save();
+        $admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => 'create.projectMember']);
+        $permission->save();
+        $admin->givePermissionTo($permission);
+        $projectManager->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => 'remove.member.from.project']);
+        $permission->save();
+        $admin->givePermissionTo($permission);
+        $projectManager->givePermissionTo($permission);
     }
 }

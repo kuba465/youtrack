@@ -15,9 +15,13 @@ class ProjectController extends Controller
     public function details(Project $project)
     {
         $projectManagers = User::role('project_manager')->get();
-        return view('layouts.project.details', compact('project', 'projectManagers'));
+        return view('layouts.project.details', compact('project', 'projectManagers', 'projectMembers'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function create(Request $request)
     {
         $validation = $request->validate([
@@ -30,6 +34,10 @@ class ProjectController extends Controller
         return redirect()->route('project.details', compact('project'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function edit(Request $request)
     {
         $validation = $request->validate([
@@ -46,15 +54,51 @@ class ProjectController extends Controller
         $managerName = !empty($project->projectManager) ? $project->projectManager->name : '';
 
         return response()->json([
-           'name' => $project->name,
-           'projectManagerId' => $managerId,
-           'projectManagerName' => $managerName
+            'name' => $project->name,
+            'projectManagerId' => $managerId,
+            'projectManagerName' => $managerName
         ], 200);
     }
 
+    /**
+     * @param Project $project
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function delete(Project $project)
     {
         $project->delete();
         return redirect()->route('admin.index');
+    }
+
+    public function addMember(Request $request, Project $project, User $member)
+    {
+        $request->validate([
+            'member' => 'required|integer|exists:users,id',
+        ]);
+
+        $project->members()->attach($member);
+
+        return response()->json([
+            'name' => $member->name,
+            'email' => $member->email,
+            'deleteUrl' => route('project.deleteMember', ['project' => $project->id, 'member' => $member->id])
+        ], 200);
+    }
+
+    public function addMemberForm(Project $project)
+    {
+        $projectMembers = User::projectMembers($project)->get();
+        $form = view('modals.addMemberForm', compact('projectMembers'))->render();
+
+        return response()->json([
+            'form' => $form
+        ]);
+    }
+
+    public function deleteMember(Project $project, User $member)
+    {
+        $project->members()->detach($member);
+        return response()->json([], 200);
     }
 }

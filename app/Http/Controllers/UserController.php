@@ -18,6 +18,7 @@ class UserController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -25,6 +26,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'userType' => 'required|string'
         ]);
 
         $user = User::create([
@@ -32,8 +34,14 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
         ]);
-        $user->assignRole('project_member');
 
-        return back();
+        auth()->user()->can('create.projectManager') ? $user->assignRole($request['userType']) : $user->assignRole('project_member');
+        $usersCount = User::all()->count();
+
+        return response()->json([
+            'name' => $user->name,
+            'url' => route('user.details', ['user' => $user]),
+            'count' => $usersCount
+        ]);
     }
 }

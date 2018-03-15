@@ -37,4 +37,13 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Project::class, 'project_members');
     }
+
+    public function scopeProjectMembers($query, Project $project)
+    {
+        $query = User::role('project_member')->whereNotIn('id', function ($query) use ($project){
+            $query->select('user_id')->from('project_members')->where('project_id', $project->id);
+        });
+
+        return $query;
+    }
 }
