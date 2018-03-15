@@ -7,7 +7,7 @@
                     @include('modals.addMember')
                     <div class="float-right">
                         <button class="btn btn-success btn-sm" id="addMemberBtn"
-                                data-url="{{route('project.addMember.form', ['project' => $project->id])}}" data-toggle="modal" data-target="#addMemberForm">
+                                data-url="{{route('project.addMember.form', ['project' => $project])}}" data-toggle="modal" data-target="#addMemberForm">
                             Add Member
                         </button>
                     </div>
@@ -21,21 +21,15 @@
             <th colspan="2">E-mail</th>
         </tr>
         @forelse($project->members as $member)
-            <tr>
+            <tr data-project-member="{{$member->id}}">
                 <td>{{$member->name}}</td>
                 <td>{{$member->email}}</td>
                 <td>
                     <div class="float-right">
-                        @if(auth()->user()->can('edit.all.users'))
-                            <button class="btn btn-warning btn-sm"
-                                    data-delete="{{route('project.deleteMember', ['project' => $project->id, 'member' => $member->id])}}"
-                                    data-toggle="modal" data-target="#editUserForm">
-                                Edit User
-                            </button>
-                        @endif
+                        <a href="{{route('user.details', ['user' => $member])}}" class="btn btn-primary btn-sm">Details</a>
                         @if(auth()->user()->can('remove.member.from.project'))
                             <button class="btn btn-danger btn-sm" onclick="getDeleteMemberLink($(this))"
-                                    data-link="{{route('project.getDeleteMemberLink', ['project' => $project->id, 'member' => $member->id])}}"
+                                    data-link="{{route('project.getDeleteMemberLink', ['project' => $project, 'member' => $member])}}"
                                     data-toggle="modal" data-target="#deleteMemberForm">
                                 Delete Member
                             </button>
@@ -50,9 +44,6 @@
         @endforelse
     </tbody>
 </table>
-@if(auth()->user()->can('edit.all.users'))
-    @include('modals.editUser')
-@endif
 @if(auth()->user()->can('remove.member.from.project'))
     @include('modals.deleteMember')
 @endif

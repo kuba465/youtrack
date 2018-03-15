@@ -54,6 +54,11 @@
                 <div class="card">
                     <div class="card-header">
                         @lang('main.admin.issues')
+                        <div class="float-right">
+                            <button id="createIssueBtn" class="btn btn-success btn-md" data-toggle="modal" data-target="#createIssueForm">
+                                Create User
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         @forelse($issues as $issue)
@@ -67,6 +72,7 @@
                     </div>
                 </div>
             </div>
+            @include('modals.createIssue')
         </div>
     </div>
 @endsection

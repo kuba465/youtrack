@@ -3,7 +3,9 @@
         <tr>
             <th colspan="2" class="text-center">
                 My Datas
-            @include('layouts.user.buttons.edit')
+                <button id="editUserBtn" class="btn btn-primary float-right btn-sm">
+                    Edit
+                </button>
             </th>
         </tr>
     </thead>
@@ -24,9 +26,9 @@
             <th>Updated At</th>
             <td>{{$user->updated_at}}</td>
         </tr>
-        {{--<tr>--}}
-            {{--<th>Role</th>--}}
-            {{--<td>{{$user->roles[0]->description}}</td>--}}
-        {{--</tr>--}}
+        <tr>
+            <th>Role</th>
+            <td>{{$user->roles[0]->description}}</td>
+        </tr>
     </tbody>
 </table>

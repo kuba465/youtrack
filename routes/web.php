@@ -34,10 +34,13 @@ Route::prefix('/project')->group(function () {
 Route::prefix('/user')->group(function () {
     Route::get('/{user}', 'UserController@details')->name('user.details');
     Route::post('/create', 'UserController@create')->name('user.create')->middleware('role:admin');
+    Route::post('{user}/edit', 'UserController@edit')->name('user.edit');
+    Route::post('/{user}/editForm', 'UserController@editForm')->name('user.edit.form');
 });
 
 Route::prefix('/issue')->group(function () {
     Route::get('/{issue}', 'IssueController@details')->name('issue.details');
+    Route::post('/create', 'IssueController@create')->name('issue.create');
 });
 
 Route::middleware('role:admin')->prefix('/admin')->group(function () {

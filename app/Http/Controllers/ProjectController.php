@@ -80,9 +80,11 @@ class ProjectController extends Controller
         $project->members()->attach($member);
 
         return response()->json([
+            'id' => $member->id,
             'name' => $member->name,
             'email' => $member->email,
-            'deleteUrl' => route('project.deleteMember', ['project' => $project->id, 'member' => $member->id])
+            'userUrl' => route('user.details', ['user' => $member]),
+            'deleteUrl' => route('project.getDeleteMemberLink', ['project' => $project, 'member' => $member])
         ], 200);
     }
 
@@ -106,6 +108,8 @@ class ProjectController extends Controller
     public function deleteMember(Project $project, User $member)
     {
         $project->members()->detach($member);
-        return response()->json([], 200);
+        return response()->json([
+            'id' => $member->id
+        ], 200);
     }
 }

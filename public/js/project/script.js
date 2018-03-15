@@ -57,10 +57,16 @@ function addMember() {
         $('tr#no_members').remove();
         var buttonDelete = $('<button></button>');
         buttonDelete.addClass('btn btn-danger btn-sm');
-        buttonDelete.attr('data-delete', datas.url);
+        buttonDelete.attr('onclick', "getDeleteMemberLink($(this))");
+        buttonDelete.attr('data-link', datas.deleteUrl);
         buttonDelete.attr('data-toggle', 'modal');
         buttonDelete.attr('data-target', '#deleteMemberForm');
         buttonDelete.text('Delete Member');
+
+        var a = $('<a></a>');
+        a.addClass('btn btn-primary btn-sm');
+        a.attr('href', datas.userUrl);
+        a.text('Details');
 
         var div = $('<div></div>');
         div.addClass('float-right');
@@ -73,7 +79,9 @@ function addMember() {
         var tdWithButton = $('<td></td>');
 
         var tr = $('<tr></tr>');
+        tr.attr('data-project-member', datas.id);
 
+        a.appendTo(div);
         buttonDelete.appendTo(div);
         div.appendTo(tdWithButton);
         tdWithName.appendTo(tr);
@@ -101,7 +109,7 @@ function deleteMember() {
         method: "DELETE",
         url: url
     }).done(function (datas) {
-        button.closest('tr').remove();
+        $('tr[data-project-member=' + datas.id + ']').remove();
         $('#deleteMemberForm').modal('hide');
     })
 }
