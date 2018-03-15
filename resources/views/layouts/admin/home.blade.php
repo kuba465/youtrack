@@ -7,7 +7,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        @lang('main.admin.projects')
+                        @lang('main.home.projects')
                         <div class="float-right">
                             <button id="addProject" class="btn btn-success btn-md" data-toggle="modal" data-target="#addProjectForm">
                                 Add Project
@@ -21,7 +21,7 @@
                                 {{$loop->iteration}}. {{$project->name}}
                             </a>
                         @empty
-                            @lang('main.admin.no_projects')
+                            @lang('main.home.no_projects')
                         @endforelse
                     </div>
                 </div>
@@ -30,7 +30,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        @lang('main.admin.users')
+                        @lang('main.home.users')
                         <div class="float-right">
                             <button id="createUserBtn" class="btn btn-success btn-md" data-toggle="modal" data-target="#createUserForm">
                                 Create User
@@ -44,16 +44,20 @@
                                 {{$loop->iteration}}. {{$user->name}}
                             </a>
                         @empty
-                            @lang('main.admin.no_users')
+                            @lang('main.home.no_users')
                         @endforelse
                     </div>
                 </div>
             </div>
             @include('modals.createUser')
-            <div class="col-md-4">
+            @if(auth()->user()->hasRole('project_member'))
+                <div class="col-md-8">
+            @else
+                <div class="col-md-4">
+            @endif
                 <div class="card">
                     <div class="card-header">
-                        @lang('main.admin.issues')
+                        @lang('main.home.issues')
                         <div class="float-right">
                             <button id="createIssueBtn" class="btn btn-success btn-md" data-toggle="modal" data-target="#createIssueForm">
                                 Create User
@@ -67,7 +71,7 @@
                                 {{$loop->iteration}}. {{$issue->title}}
                             </a>
                         @empty
-                            @lang('main.admin.no_issues')
+                            @lang('main.home.no_issues')
                         @endforelse
                     </div>
                 </div>

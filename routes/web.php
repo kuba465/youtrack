@@ -11,12 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
-
 
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -44,7 +39,6 @@ Route::prefix('/issue')->group(function () {
 });
 
 Route::middleware('role:admin')->prefix('/admin')->group(function () {
-    Route::get('/', 'AdminController@index')->name('admin.index');
     Route::resource('permission', 'Admin\\PermissionController');
     Route::resource('role', 'Admin\\RoleController');
 });

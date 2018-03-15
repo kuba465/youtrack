@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Issue;
+use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class HomeController extends Controller
 {
@@ -24,9 +28,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->hasRole('admin')) {
-            return redirect()->intended('/admin');
-        }
-        return view('home');
+        $projects = Project::all();
+        $users = User::all();
+        $issues = Issue::all();
+        $projectManagers = User::role('project_manager')->get();
+        $roles = Role::where('name', '<>', 'admin')->get();
+        return view('home', compact('projects', 'users', 'issues', 'projectManagers', 'roles'));
     }
 }

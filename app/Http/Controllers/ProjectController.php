@@ -68,7 +68,7 @@ class ProjectController extends Controller
     public function delete(Project $project)
     {
         $project->delete();
-        return redirect()->route('admin.index');
+        return redirect()->route('home');
     }
 
     public function addMember(Request $request, Project $project, User $member)

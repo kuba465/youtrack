@@ -5,10 +5,10 @@ return [
         'header' => 'Your projects'
     ],
 
-    'admin' => [
-        'projects' => 'All projects',
-        'users' => 'All users',
-        'issues' => 'All issues',
+    'home' => [
+        'projects' => 'Projects',
+        'users' => 'Users',
+        'issues' => 'Issues',
         'no_projects' => 'There are no projects',
         'no_users' => 'There are no users',
         'no_issues' => 'There are no issues'
