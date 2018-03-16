@@ -7,27 +7,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="{{route('issue.create')}}" method="post" id="createIssue">
-                    {{csrf_field()}}
-                    <div class="form-group">
-                        <label for="name">Title of issue</label>
-                        <input type="text" name="name" class="form-control" placeholder="Enter name of project" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="projectManager">Choose project manager</label>
-                        <select name="projectManager" class="form-control">
-                            <option value="0"> - </option>
-                            @foreach($projectManagers as $manager)
-                                <option value="{{$manager->id}}">{{$manager->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </form>
+            <div class="modal-body" id="createIssueModalBody">
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" form="createIssue" id="saveIssue" class="btn btn-primary">Add issue</button>
+                <button type="submit" id="saveIssue" class="btn btn-primary">Add issue</button>
             </div>
         </div>
     </div>

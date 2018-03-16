@@ -35,10 +35,12 @@ Route::prefix('/user')->group(function () {
 
 Route::prefix('/issue')->group(function () {
     Route::get('/{issue}', 'IssueController@details')->name('issue.details');
+    Route::post('/{authUser}/createForm', 'IssueController@createForm')->name('issue.createForm');
+    Route::post('/ownerSelect/{project?}', 'IssueController@ownerSelect')->name('issue.ownerSelect');
     Route::post('/create', 'IssueController@create')->name('issue.create');
 });
 
-Route::middleware('role:admin')->prefix('/admin')->group(function () {
+Route::prefix('/admin')->middleware('role:admin')->group(function () {
     Route::resource('permission', 'Admin\\PermissionController');
     Route::resource('role', 'Admin\\RoleController');
 });

@@ -28,16 +28,27 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function issues()
     {
         return $this->hasMany(Issue::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'project_members');
+        return $this->belongsToMany(Project::class, 'project_members')->withPivot('is_project_manager');
     }
 
+    /**
+     * @param $query
+     * @param Project $project
+     * @return mixed
+     */
     public function scopeProjectMembers($query, Project $project)
     {
         $query = User::role('project_member')->whereNotIn('id', function ($query) use ($project){

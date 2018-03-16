@@ -13,11 +13,6 @@ class AddForeignKeys extends Migration
      */
     public function up()
     {
-        Schema::table('project_issue', function (Blueprint $table) {
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('issue_id')->references('id')->on('issues')->onDelete('cascade');
-        });
-
         Schema::table('project_members', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
@@ -28,11 +23,6 @@ class AddForeignKeys extends Migration
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
             $table->foreign('priority_id')->references('id')->on('priorities')->onDelete('cascade');
-        });
-
-        Schema::table('projects', function (Blueprint $table) {
-            $table->index('project_manager_id');
-            $table->foreign('project_manager_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

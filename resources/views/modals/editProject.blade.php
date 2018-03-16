@@ -19,7 +19,7 @@
                         <select name="projectManager" id="projectManager" class="form-control">
                             <option value="0"> - </option>
                             @foreach($projectManagers as $manager)
-                                <option value="{{$manager->id}}" {{!empty($project->projectManager) && $project->projectManager->id == $manager->id ? "selected" : ""}}>{{$manager->name}}</option>
+                                <option value="{{$manager->id}}" {{!empty($projectManager) && $projectManager->id == $manager->id ? "selected" : ""}}>{{$manager->name}}</option>
                             @endforeach
                         </select>
                     </div>

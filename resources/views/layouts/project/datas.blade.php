@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <th>Project Manager</th>
-            <td id="manager">{{!empty($project->projectManager) ? $project->projectManager->name : ''}}</td>
+            <td id="manager">{{!empty($projectManager) ? $projectManager->name : ''}}</td>
         </tr>
         <tr>
             <th>Created At</th>

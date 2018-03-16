@@ -54,33 +54,28 @@
                 </div>
                 @include('modals.createUser')
             @endif
-            @if(auth()->user()->hasRole('project_member'))
-                <div class="col-md-8">
-            @else
-                <div class="col-md-4">
-            @endif
-                    <div class="card">
-                        <div class="card-header">
-                            @lang('main.home.issues')
-                            <div class="float-right">
-                                <button id="createIssueBtn" class="btn btn-success btn-md" data-toggle="modal" data-target="#createIssueForm">
-                                    Create Issue
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            @forelse($issues as $issue)
-                                <a href="{{route('issue.details', ['issue' => $issue])}}"
-                                   class="list-group-item list-group-item-action list-group-item-success">
-                                    {{$loop->iteration}}. {{$issue->title}}
-                                </a>
-                            @empty
-                                @lang('main.home.no_issues')
-                            @endforelse
+            @if(auth()->user()->hasRole('project_member')) <div class="col-md-8"> @else <div class="col-md-4"> @endif
+                <div class="card">
+                    <div class="card-header">
+                        @lang('main.home.issues')
+                        <div class="float-right">
+                            <button id="createIssueBtn" data-url="{{route('issue.createForm', ['authUser' => auth()->user()])}}" class="btn btn-success btn-md" data-toggle="modal" data-target="#createIssueForm">
+                                Create Issue
+                            </button>
                         </div>
                     </div>
+                    <div class="card-body">
+                        @forelse($issues as $issue)
+                            <a href="{{route('issue.details', ['issue' => $issue])}}"
+                               class="list-group-item list-group-item-action list-group-item-success">
+                                {{$loop->iteration}}. {{$issue->title}}
+                            </a>
+                        @empty
+                            @lang('main.home.no_issues')
+                        @endforelse
+                    </div>
                 </div>
-                @include('modals.createIssue')
-                </div>
+            </div>
+            @include('modals.createIssue')
         </div>
 @endsection

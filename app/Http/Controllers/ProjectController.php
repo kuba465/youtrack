@@ -14,8 +14,9 @@ class ProjectController extends Controller
      */
     public function details(Project $project)
     {
+        $projectManager = $project->getProjectManager();
         $projectManagers = User::role('project_manager')->get();
-        return view('layouts.project.details', compact('project', 'projectManagers', 'projectMembers'));
+        return view('layouts.project.details', compact('project', 'projectManager', 'projectManagers', 'projectMembers'));
     }
 
     /**
@@ -29,7 +30,9 @@ class ProjectController extends Controller
             'projectManager' => 'nullable|integer'
         ]);
         $project = Project::create(['name' => $request->input('name')]);
-        $project->projectManager()->associate($request->input('projectManager'));
+        if(!empty($request['projectManager'])){
+            $project->members()->attach($request['projectManager'], ['is_project_manager' => true]);
+        }
         $project->save();
         return redirect()->route('project.details', compact('project'));
     }
@@ -47,16 +50,15 @@ class ProjectController extends Controller
         ]);
         $project = Project::find($request['id']);
         $project->name = $request['name'];
-        $project->projectManager()->associate($request['projectManager']);
-        $project->save();
 
-        $managerId = !empty($project->projectManager) ? $project->projectManager->id : 0;
-        $managerName = !empty($project->projectManager) ? $project->projectManager->name : '';
+        $value = (int)$request['projectManager'];
+        $projectManager = $project->changeProjectManager($value);
+        $project->save();
 
         return response()->json([
             'name' => $project->name,
-            'projectManagerId' => $managerId,
-            'projectManagerName' => $managerName
+            'projectManagerId' => $value > 0 ? $projectManager->id : 0,
+            'projectManagerName' => $value > 0 ? $projectManager->name : ''
         ], 200);
     }
 
@@ -71,6 +73,12 @@ class ProjectController extends Controller
         return redirect()->route('home');
     }
 
+    /**
+     * @param Request $request
+     * @param Project $project
+     * @param User $member
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addMember(Request $request, Project $project, User $member)
     {
         $request->validate([
@@ -88,13 +96,17 @@ class ProjectController extends Controller
         ], 200);
     }
 
+    /**
+     * @param Project $project
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addMemberForm(Project $project)
     {
         $projectMembers = User::projectMembers($project)->get();
         $form = view('modals.addMemberForm', compact('projectMembers'))->render();
         return response()->json([
             'form' => $form
-        ]);
+        ], 200);
     }
 
     public function getDeleteMemberLink(Project $project, User $member)
@@ -102,9 +114,14 @@ class ProjectController extends Controller
         $link = route('project.deleteMember', ['project' => $project, 'member' => $member]);
         return response()->json([
             'link' => $link
-        ]);
+        ], 200);
     }
 
+    /**
+     * @param Project $project
+     * @param User $member
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteMember(Project $project, User $member)
     {
         $project->members()->detach($member);

@@ -7,7 +7,7 @@ $(function () {
 
     $('#saveChanges').click(editProject);
     $('#addMember').click(addMember);
-    $('#addMemberBtn').click(putFormInModal);
+    $('#addMemberBtn').click(putFormInMemberModal);
     $('#deleteMember').click(deleteMember);
 });
 
@@ -34,7 +34,7 @@ function editProject() {
     });
 }
 
-function putFormInModal() {
+function putFormInMemberModal() {
     $.ajax({
         method: "POST",
         url: $(this).attr('data-url')
