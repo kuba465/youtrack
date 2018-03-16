@@ -51,10 +51,26 @@ class User extends Authenticatable
      */
     public function scopeProjectMembers($query, Project $project)
     {
-        $query = User::role('project_member')->whereNotIn('id', function ($query) use ($project){
+        $query = User::role('project_member')->whereNotIn('id', function ($query) use ($project) {
             $query->select('user_id')->from('project_members')->where('project_id', $project->id);
         });
 
+        return $query;
+    }
+
+    public function scopeUsersVisibleForAuthUser($query, User $user)
+    {
+        if ($user->hasRole('admin')) {
+            $query = User::all();
+        } elseif ($user->hasRole('project_manager')) {
+            $projects = $user->projects;
+            $query = User::whereIn('id', function ($newQuery) use ($projects) {
+                $newQuery->select('user_id')->from('project_members')
+                    ->where('is_project_manager', false)
+                    ->whereIn('project_id', $projects)
+                    ->get();
+            })->get();
+        }
         return $query;
     }
 }

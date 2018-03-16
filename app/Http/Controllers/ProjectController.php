@@ -109,6 +109,11 @@ class ProjectController extends Controller
         ], 200);
     }
 
+    /**
+     * @param Project $project
+     * @param User $member
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getDeleteMemberLink(Project $project, User $member)
     {
         $link = route('project.deleteMember', ['project' => $project, 'member' => $member]);

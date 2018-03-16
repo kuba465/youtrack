@@ -26,11 +26,19 @@ class Project extends Model
         return $this->belongsToMany(User::class, 'project_members')->withPivot('is_project_manager')->withTimestamps();
     }
 
+    /**
+     * @return mixed
+     */
     public function getProjectManager()
     {
         return $this->members()->where('is_project_manager', true)->first();
     }
 
+    /**
+     * @param int $userId
+     * @param bool $value
+     * @return mixed
+     */
     public function setValueForProjectManager(int $userId, bool $value)
     {
         $member = $this->members()->where('user_id', $userId)->first();
@@ -42,16 +50,21 @@ class Project extends Model
         return $member;
     }
 
+    /**
+     * @param int $newProjectManagerId
+     * @return mixed
+     */
     public function changeProjectManager(int $newProjectManagerId)
     {
         $value = $newProjectManagerId > 0 ? true : false;
         $projectManager = $this->getProjectManager();
         if (!empty($projectManager) && $projectManager->id != $newProjectManagerId && $value !== false) {
-            $this->setValueForProjectManager($projectManager->id, false);
-            $this->members()->attach($newProjectManagerId);
+            $this->members()->detach($projectManager);
         } elseif ($value === false) {
-            return $this->setValueForProjectManager($projectManager->id, $value);
-        } else {
+            return $this->members()->detach($projectManager);
+        }
+
+        if (empty($this->members()->where('user_id', $newProjectManagerId)->first()) && $newProjectManagerId > 0) {
             $this->members()->attach($newProjectManagerId);
         }
 
@@ -67,8 +80,6 @@ class Project extends Model
     {
         if ($user->hasRole('admin')) {
             $query = Project::all();
-        } elseif ($user->hasRole('project_manager')) {
-            $query = Project::where('project_manager_id', $user);
         } else {
             $query = $user->projects;
         }

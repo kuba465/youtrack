@@ -28,8 +28,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $projects = Project::projectsAvailableToUser(\auth()->user());
-        $users = User::all();
+        $authUser = \auth()->user();
+        $projects = Project::projectsAvailableToUser($authUser);
+        $users = User::usersVisibleForAuthUser($authUser);
         $issues = Issue::all();
         $projectManagers = User::role('project_manager')->get();
         $roles = Role::where('name', '<>', 'admin')->get();

@@ -21,6 +21,7 @@
             <th colspan="2">E-mail</th>
         </tr>
         @forelse($project->members as $member)
+            @if($member->hasRole('project_manager')) @continue; @endif
             <tr data-project-member="{{$member->id}}">
                 <td>{{$member->name}}</td>
                 <td>{{$member->email}}</td>
