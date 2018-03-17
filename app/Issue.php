@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Issue extends Model
 {
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'description', 'status_id', 'priority_id', 'user_id', 'project_id'
+    ];
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function priority()

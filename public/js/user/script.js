@@ -33,10 +33,11 @@ function createUser() {
         password.val('');
         passwordConfirmation.val('');
 
+        var length = ($('div#users').children().length + 1);
         var button = $('<a></a>');
         button.attr('href', datas.url);
         button.addClass('list-group-item list-group-item-action list-group-item-primary');
-        button.text(datas.count + '. ' + datas.name);
+        button.text(length + '. ' + datas.name);
 
         button.appendTo($('#users'));
 

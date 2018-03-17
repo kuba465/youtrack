@@ -28,7 +28,7 @@ Route::prefix('/project')->group(function () {
 
 Route::prefix('/user')->group(function () {
     Route::get('/{user}', 'UserController@details')->name('user.details');
-    Route::post('/create', 'UserController@create')->name('user.create')->middleware('role:admin');
+    Route::post('/create', 'UserController@create')->name('user.create')->middleware('permission:create.projectMember');
     Route::post('{user}/edit', 'UserController@edit')->name('user.edit');
     Route::post('/{user}/editForm', 'UserController@editForm')->name('user.edit.form');
 });

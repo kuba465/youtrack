@@ -22,12 +22,33 @@ class IssueController extends Controller
 
     public function create(Request $request)
     {
+        $validatedDatas = $request->validate([
+            'datas.title' => 'required|string|max:255',
+            'datas.description' => 'required|string',
+            'datas.status' => 'required|integer|exists:statuses,id',
+            'datas.priority' => 'required|integer|exists:priorities,id',
+            'datas.project' => 'required|integer|exists:projects,id',
+            'datas.owner' => 'required|integer|exists:users,id',
+        ]);
 
+        $issue = Issue::create([
+            'user_id' => $validatedDatas['datas']['owner'],
+            'project_id' => $validatedDatas['datas']['project'],
+            'title' => $validatedDatas['datas']['title'],
+            'description' => $validatedDatas['datas']['description'],
+            'status_id' => $validatedDatas['datas']['status'],
+            'priority_id' => $validatedDatas['datas']['priority'],
+        ]);
+
+        return response()->json([
+           'issueUrl' => route('issue.details', ['issue' => $issue]),
+        ]);
     }
 
     /**
      * @param User $authUser
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function createForm(User $authUser)
     {
@@ -44,6 +65,7 @@ class IssueController extends Controller
     /**
      * @param Project $project
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function ownerSelect(Project $project)
     {

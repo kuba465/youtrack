@@ -12,7 +12,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" id="saveIssue" class="btn btn-primary">Add issue</button>
+                <button type="submit" id="saveIssue" data-save="{{route('issue.create')}}" class="btn btn-primary" disabled>Add issue</button>
             </div>
         </div>
     </div>

@@ -64,10 +64,10 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" id="issues">
                         @forelse($issues as $issue)
                             <a href="{{route('issue.details', ['issue' => $issue])}}"
-                               class="list-group-item list-group-item-action list-group-item-success">
+                               class="list-group-item list-group-item-action list-group-item-warning">
                                 {{$loop->iteration}}. {{$issue->title}}
                             </a>
                         @empty

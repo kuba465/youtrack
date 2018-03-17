@@ -26,7 +26,7 @@
     </div>
     <div class="form-group">
         <label for="project">Project</label>
-        <select name="project" class="form-control" data-url="{{route('issue.ownerSelect')}}" id="projectsSelect">
+        <select name="project" class="form-control" data-url="{{route('issue.ownerSelect')}}">
             <option value="0"> - </option>
             @foreach($projects as $project)
                 <option value="{{$project->id}}">{{$project->name}}</option>

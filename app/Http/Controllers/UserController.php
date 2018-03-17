@@ -26,7 +26,6 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'userType' => 'required|string'
         ]);
 
         $user = User::create([
@@ -36,12 +35,10 @@ class UserController extends Controller
         ]);
 
         auth()->user()->can('create.projectManager') ? $user->assignRole($request['userType']) : $user->assignRole('project_member');
-        $usersCount = User::all()->count();
 
         return response()->json([
             'name' => $user->name,
             'url' => route('user.details', ['user' => $user]),
-            'count' => $usersCount
         ]);
     }
 }
