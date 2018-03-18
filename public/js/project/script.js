@@ -9,6 +9,7 @@ $(function () {
     $('#addMember').click(addMember);
     $('#addMemberBtn').click(putFormInMemberModal);
     $('#deleteMember').click(deleteMember);
+    $('#issuesOfProject tbody').on('click', 'tr.issueInProject', redirectToIssue);
 });
 
 function editProject() {
@@ -112,4 +113,9 @@ function deleteMember() {
         $('tr[data-project-member=' + datas.id + ']').remove();
         $('#deleteMemberForm').modal('hide');
     })
+}
+
+function redirectToIssue() {
+    var url = $(this).attr('data-url');
+    window.location = url;
 }

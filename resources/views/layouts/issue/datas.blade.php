@@ -38,6 +38,14 @@
             <td id="priority">{{$issue->priority->name}}</td>
         </tr>
         <tr>
+            <th>Estimated time</th>
+            <td id="estimatedTime">{{$issue->stringOfTime('estimated_time')}}</td>
+        </tr>
+        <tr>
+            <th>Work time</th>
+            <td id="workTime">{{$issue->stringOfTime('work_time')}}</td>
+        </tr>
+        <tr>
             <th>Created At</th>
             <td>{{$issue->created_at}}</td>
         </tr>

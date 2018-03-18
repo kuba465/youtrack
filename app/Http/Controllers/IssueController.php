@@ -21,6 +21,10 @@ class IssueController extends Controller
         return view('layouts.issue.details', compact('issue'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create(Request $request)
     {
         $validatedDatas = $request->validate([
@@ -30,6 +34,7 @@ class IssueController extends Controller
             'datas.priority' => 'required|integer|exists:priorities,id',
             'datas.project' => 'required|integer|exists:projects,id',
             'datas.owner' => 'required|integer|exists:users,id',
+            'datas.estimated_time' => 'string|nullable|min:3|max:8|regex:/^\d{1,2}:\d{1,2}:?\d{0,2}$/'
         ]);
 
         $issue = Issue::create([
@@ -39,11 +44,20 @@ class IssueController extends Controller
             'description' => $validatedDatas['datas']['description'],
             'status_id' => $validatedDatas['datas']['status'],
             'priority_id' => $validatedDatas['datas']['priority'],
+            'estimated_time' => !empty($validatedDatas['datas']['estimated_time']) ? $validatedDatas['datas']['estimated_time'] : '00:00:00',
         ]);
+
+        $status = Status::find($validatedDatas['datas']['status']);
+        if ($status->name == 'Fixed') {
+            $issue->is_completed = 1;
+            $issue->save();
+        }
 
         return response()->json([
             'issueUrl' => route('issue.details', ['issue' => $issue]),
-            'title' => $validatedDatas['datas']['title']
+            'title' => $validatedDatas['datas']['title'],
+            'priority' => $issue->priority->name,
+            'status' => $issue->status->name
         ]);
     }
 
@@ -91,20 +105,32 @@ class IssueController extends Controller
             'status' => 'required|integer|exists:statuses,id',
             'priority' => 'required|integer|exists:priorities,id',
             'owner' => 'required|integer|exists:users,id',
+            'estimated_time' => 'string|nullable|min:3|max:8|regex:/^\d{1,2}:\d{1,2}:?\d{0,2}$/',
+            'work_time' => 'string|nullable|min:3|max:8|regex:/^\d{1,2}:\d{1,2}:?\d{0,2}$/'
         ]);
+
+        $statusCheck = Status::find($validatedDatas['status']);
+        if ($statusCheck->name == 'Fixed') {
+            $issue->is_completed = 1;
+        } elseif ($issue->status->name == 'Fixed' && $statusCheck->name != 'Fixed') {
+            $issue->is_completed = 0;
+        }
 
         $issue->title = $validatedDatas['title'];
         $issue->status_id = $validatedDatas['status'];
         $issue->priority_id = $validatedDatas['priority'];
         $issue->user_id = $validatedDatas['owner'];
+        $issue->estimated_time = !empty($validatedDatas['estimated_time']) ? $validatedDatas['estimated_time'] : '00:00:00';
+        $issue->work_time = !empty($validatedDatas['work_time']) ? $validatedDatas['work_time'] : '00:00:00';
 
         $issue->save();
-
         return response()->json([
             'title' => $issue->title,
             'owner' => $issue->owner->name,
             'status' => $issue->status->name,
-            'priority' => $issue->priority->name
+            'priority' => $issue->priority->name,
+            'estimatedTime' => $issue->stringOfTime('estimated_time'),
+            'workTime' => $issue->stringOfTime('work_time')
         ], 200);
     }
 
@@ -126,6 +152,11 @@ class IssueController extends Controller
         ], 200);
     }
 
+    /**
+     * @param Request $request
+     * @param Issue $issue
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function editDescription(Request $request, Issue $issue)
     {
         $validatedDatas = $request->validate([

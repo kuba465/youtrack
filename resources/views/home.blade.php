@@ -68,7 +68,7 @@
                         @forelse($issues as $issue)
                             <a href="{{route('issue.details', ['issue' => $issue])}}"
                                class="list-group-item list-group-item-action list-group-item-warning">
-                                {{$loop->iteration}}. {{$issue->title}}
+                                {{$loop->iteration}}. <strong>{{$issue->title}}</strong>({{$issue->status->name}}/{{$issue->priority->name}})
                             </a>
                         @empty
                             @lang('main.home.no_issues')

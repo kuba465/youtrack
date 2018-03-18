@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/css/bootstrap-dialog.min.css" />--}}
 </head>
 <body>
@@ -79,7 +81,6 @@
     <script src="{{ asset('js/project/script.js') }}"></script>
     <script src="{{ asset('js/user/script.js') }}"></script>
     <script src="{{ asset('js/issue/script.js') }}"></script>
-
 </body>
 </html>
 

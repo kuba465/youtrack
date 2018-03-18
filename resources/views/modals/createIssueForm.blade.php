@@ -25,6 +25,10 @@
         </select>
     </div>
     <div class="form-group">
+        <label for="estimated_time">Estimated time</label>
+        <input type="text" name="estimated_time" minlength="3" maxlength="8" class="form-control" placeholder="dd:hh:mm or hh:mm">
+    </div>
+    <div class="form-group">
         <label for="project">Project</label>
         <select name="project" class="form-control" data-url="{{route('issue.ownerSelect')}}">
             <option value="0"> - </option>

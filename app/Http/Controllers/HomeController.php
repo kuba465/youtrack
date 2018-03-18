@@ -31,7 +31,7 @@ class HomeController extends Controller
         $authUser = \auth()->user();
         $projects = Project::projectsAvailableToUser($authUser);
         $users = User::usersVisibleForAuthUser($authUser);
-        $issues = Issue::all();
+        $issues = Issue::userIssues($authUser);
         $projectManagers = User::role('project_manager')->get();
         $roles = Role::where('name', '<>', 'admin')->get();
         return view('home', compact('projects', 'users', 'issues', 'projectManagers', 'roles'));

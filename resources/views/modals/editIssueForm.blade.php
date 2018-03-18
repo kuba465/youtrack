@@ -20,6 +20,14 @@
             @endforeach
         </select>
     </div>
+    <div class="form-group">
+        <label for="estimated_time">Estimated time</label>
+        <input type="text" name="estimated_time" minlength="3" maxlength="8" value="{{$issue->estimated_time}}" class="form-control" placeholder="dd:hh:mm or hh:mm">
+    </div>
+    <div class="form-group">
+        <label for="work_time">Work time</label>
+        <input type="text" name="work_time" minlength="3" maxlength="8" value="{{$issue->work_time}}" class="form-control" placeholder="dd:hh:mm or hh:mm">
+    </div>
     <div class="form-group" id="ownerOfIssue">
         <label for="owner">Owner</label>
         <select name="owner" class="form-control">

@@ -28,7 +28,7 @@ function createIssue() {
         var length = $('div#issues').children().length + 1;
         a.attr('href', datas.issueUrl);
         a.addClass('list-group-item list-group-item-action list-group-item-warning');
-        a.text(length + '. ' + datas.title);
+        a.text(length + '. ' + datas.title + '(' + datas.status + '/' + datas.priority + ')');
         a.appendTo($('div#issues'));
         $('#createIssueForm').modal('hide');
     });
@@ -47,6 +47,7 @@ function putFormInIssueModal() {
 function putOwnerSelectInIssueModal() {
     var projectId = $(this).val();
     if (projectId > 0) {
+        $('#ownerOfIssue').remove();
         $.ajax({
             method: "POST",
             url: $(this).attr('data-url') + '/' + $(this).val()
@@ -65,6 +66,8 @@ function editIssue() {
     var status = $('select[name="status"]').val();
     var priority = $('select[name="priority"]').val();
     var owner = $('select[name="owner"]').val();
+    var estimatedTime = $('input[name="estimated_time"]').val();
+    var workTime = $('input[name="work_time"]').val();
     var url = $(this).attr('data-save');
 
     $.ajax({
@@ -74,13 +77,18 @@ function editIssue() {
             title: title,
             status: status,
             priority: priority,
-            owner: owner
+            owner: owner,
+            estimated_time: estimatedTime,
+            work_time: workTime
         }
     }).done(function (datas) {
+        console.log(datas);
         $('td#title').text(datas.title);
         $('td#owner').text(datas.owner);
         $('td#status').text(datas.status);
         $('td#priority').text(datas.priority);
+        $('td#estimatedTime').text(datas.estimatedTime);
+        $('td#workTime').text(datas.workTime);
         $('#editIssueForm').modal('hide');
     });
 }
