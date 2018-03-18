@@ -7,6 +7,7 @@ use App\Priority;
 use App\Project;
 use App\Status;
 use App\User;
+use Hamcrest\Core\Is;
 use Illuminate\Http\Request;
 
 class IssueController extends Controller
@@ -41,7 +42,8 @@ class IssueController extends Controller
         ]);
 
         return response()->json([
-           'issueUrl' => route('issue.details', ['issue' => $issue]),
+            'issueUrl' => route('issue.details', ['issue' => $issue]),
+            'title' => $validatedDatas['datas']['title']
         ]);
     }
 
@@ -75,5 +77,78 @@ class IssueController extends Controller
         return response()->json([
             'select' => $select
         ], 200);
+    }
+
+    /**
+     * @param Request $request
+     * @param Issue $issue
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit(Request $request, Issue $issue)
+    {
+        $validatedDatas = $request->validate([
+            'title' => 'required|string|max:255',
+            'status' => 'required|integer|exists:statuses,id',
+            'priority' => 'required|integer|exists:priorities,id',
+            'owner' => 'required|integer|exists:users,id',
+        ]);
+
+        $issue->title = $validatedDatas['title'];
+        $issue->status_id = $validatedDatas['status'];
+        $issue->priority_id = $validatedDatas['priority'];
+        $issue->user_id = $validatedDatas['owner'];
+
+        $issue->save();
+
+        return response()->json([
+            'title' => $issue->title,
+            'owner' => $issue->owner->name,
+            'status' => $issue->status->name,
+            'priority' => $issue->priority->name
+        ], 200);
+    }
+
+    /**
+     * @param Issue $issue
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
+     *
+     */
+    public function editForm(Issue $issue)
+    {
+        $statuses = Status::all();
+        $priorities = Priority::all();
+        $users = $issue->project->members;
+        $form = view('modals.editIssueForm', compact('statuses', 'priorities', 'users', 'issue'))->render();
+
+        return response()->json([
+            'form' => $form
+        ], 200);
+    }
+
+    public function editDescription(Request $request, Issue $issue)
+    {
+        $validatedDatas = $request->validate([
+            'description' => 'required|string',
+        ]);
+
+        $issue->description = $validatedDatas['description'];
+        $issue->save();
+
+        return response()->json([
+            'description' => $issue->description
+        ], 200);
+    }
+
+    /**
+     * @param Issue $issue
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function delete(Issue $issue)
+    {
+        $project = $issue->project;
+        $issue->delete();
+        return redirect()->route('project.details', ['project' => $project]);
     }
 }

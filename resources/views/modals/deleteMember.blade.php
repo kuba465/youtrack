@@ -13,7 +13,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" id="deleteMember"
-                        class="btn btn-primary">Remove member
+                        class="btn btn-danger">Remove member
                 </button>
             </div>
         </div>

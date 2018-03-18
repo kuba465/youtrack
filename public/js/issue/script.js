@@ -7,10 +7,13 @@ $(function () {
 
     $('#createIssueBtn').click(putFormInIssueModal);
     $('#saveIssue').click(createIssue);
+    $('#editIssueBtn').click(putFormInEditIssueModal);
+    $('#saveIssueChanges').click(editIssue);
+    $('#saveIssueDescription').click(editIssueDescription);
 });
 
 function createIssue() {
-    var formDatas = $('form#createIssue').serializeArray().reduce(function(obj, item) {
+    var formDatas = $('form#createIssue').serializeArray().reduce(function (obj, item) {
         obj[item.name] = item.value;
         return obj;
     }, {});
@@ -21,15 +24,14 @@ function createIssue() {
         url: url,
         data: {datas: formDatas}
     }).done(function (datas) {
-    <a href="{{route('issue.details', ['issue' => $issue])}}"
-    class="list-group-item list-group-item-action list-group-item-success">
-            {{$loop->iteration}}. {{$issue->title}}
-    </a>
-
         var a = $('<a></a>');
-    a.attr('href', datas.issueUrl);
-    a.addClass('list-group-item list-group-item-action list-group-item-success');
-    })
+        var length = $('div#issues').children().length + 1;
+        a.attr('href', datas.issueUrl);
+        a.addClass('list-group-item list-group-item-action list-group-item-warning');
+        a.text(length + '. ' + datas.title);
+        a.appendTo($('div#issues'));
+        $('#createIssueForm').modal('hide');
+    });
 }
 
 function putFormInIssueModal() {
@@ -56,4 +58,53 @@ function putOwnerSelectInIssueModal() {
         $('#ownerOfIssue').remove();
         $('#saveIssue').prop('disabled', true);
     }
+}
+
+function editIssue() {
+    var title = $('input[name="title"]').val();
+    var status = $('select[name="status"]').val();
+    var priority = $('select[name="priority"]').val();
+    var owner = $('select[name="owner"]').val();
+    var url = $(this).attr('data-save');
+
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: {
+            title: title,
+            status: status,
+            priority: priority,
+            owner: owner
+        }
+    }).done(function (datas) {
+        $('td#title').text(datas.title);
+        $('td#owner').text(datas.owner);
+        $('td#status').text(datas.status);
+        $('td#priority').text(datas.priority);
+        $('#editIssueForm').modal('hide');
+    });
+}
+
+function putFormInEditIssueModal() {
+    $.ajax({
+        method: "POST",
+        url: $(this).attr('data-url')
+    }).done(function (form) {
+        $('#editIssueModalBody').html(form.form);
+    });
+}
+
+function editIssueDescription() {
+    var description = $('textarea[name="description"]');
+    var url = $(this).attr('data-save');
+
+    $.ajax({
+        method: "POST",
+        url: url,
+        data:{description: description.val()}
+    }).done(function (datas) {
+        description.val(datas.description);
+        $('#issueDescription').text(datas.description);
+        $('#editIssueDescriptionForm').modal('hide');
+    });
 }

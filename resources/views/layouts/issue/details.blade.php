@@ -7,7 +7,12 @@
                 @include('layouts.issue.datas')
             </div>
             <div class="col-md-8">
-                @include('layouts.issue.projects')
+                @include('layouts.issue.description')
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                @include('layouts.issue.comments')
             </div>
         </div>
     </div>
