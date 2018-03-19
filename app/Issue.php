@@ -57,7 +57,6 @@ class Issue extends Model
             }
             return $query->orderBy('priority_id', 'desc')->get();
         }
-
     }
 
     /**

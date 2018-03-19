@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         @include('errors')
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card">
                     <div class="card-header">
                         @lang('main.home.projects')
@@ -30,7 +30,7 @@
             </div>
             @include('modals.createProject')
             @if(auth()->user()->can('show.users'))
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card">
                         <div class="card-header">
                             @lang('main.home.users')
@@ -54,12 +54,13 @@
                 </div>
                 @include('modals.createUser')
             @endif
-            @if(auth()->user()->hasRole('project_member')) <div class="col-md-8"> @else <div class="col-md-4"> @endif
+            @if(auth()->user()->hasRole('project_member')) <div class="col-md-9"> @else <div class="col-md-6"> @endif
                 <div class="card">
                     <div class="card-header">
                         @lang('main.home.issues')
                         <div class="float-right">
-                            <button id="createIssueBtn" data-url="{{route('issue.createForm', ['authUser' => auth()->user()])}}" class="btn btn-success btn-md" data-toggle="modal" data-target="#createIssueForm">
+                            <button id="createIssueBtn" data-url="{{route('issue.createForm', ['authUser' => auth()->user()])}}"
+                                    class="btn btn-success btn-md" data-toggle="modal" data-target="#createIssueForm">
                                 Create Issue
                             </button>
                         </div>
@@ -77,5 +78,6 @@
                 </div>
             </div>
             @include('modals.createIssue')
+        </div>
         </div>
 @endsection

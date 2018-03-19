@@ -52,13 +52,16 @@ class IssueController extends Controller
             $issue->is_completed = 1;
             $issue->save();
         }
-
         return response()->json([
             'issueUrl' => route('issue.details', ['issue' => $issue]),
             'title' => $validatedDatas['datas']['title'],
+            'description' => $issue->description,
+            'owner' => $issue->owner->name,
+            'status' => $issue->status->name,
             'priority' => $issue->priority->name,
-            'status' => $issue->status->name
-        ]);
+            'created_at' => $issue->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $issue->updated_at->format('Y-m-d H:i:s'),
+        ], 200);
     }
 
     /**
@@ -122,8 +125,8 @@ class IssueController extends Controller
         $issue->user_id = $validatedDatas['owner'];
         $issue->estimated_time = !empty($validatedDatas['estimated_time']) ? $validatedDatas['estimated_time'] : '00:00:00';
         $issue->work_time = !empty($validatedDatas['work_time']) ? $validatedDatas['work_time'] : '00:00:00';
-
         $issue->save();
+
         return response()->json([
             'title' => $issue->title,
             'owner' => $issue->owner->name,
@@ -169,6 +172,12 @@ class IssueController extends Controller
         return response()->json([
             'description' => $issue->description
         ], 200);
+    }
+
+
+    public function addIssueToProject(Project $project)
+    {
+
     }
 
     /**

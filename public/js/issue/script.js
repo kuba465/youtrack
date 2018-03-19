@@ -82,7 +82,6 @@ function editIssue() {
             work_time: workTime
         }
     }).done(function (datas) {
-        console.log(datas);
         $('td#title').text(datas.title);
         $('td#owner').text(datas.owner);
         $('td#status').text(datas.status);

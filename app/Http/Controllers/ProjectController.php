@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Priority;
 use App\Project;
+use App\Status;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -30,7 +32,7 @@ class ProjectController extends Controller
             'projectManager' => 'nullable|integer'
         ]);
         $project = Project::create(['name' => $request->input('name')]);
-        if(!empty($request['projectManager'])){
+        if (!empty($request['projectManager'])) {
             $project->members()->attach($request['projectManager'], ['is_project_manager' => true]);
         }
         $project->save();
@@ -119,6 +121,18 @@ class ProjectController extends Controller
         $link = route('project.deleteMember', ['project' => $project, 'member' => $member]);
         return response()->json([
             'link' => $link
+        ], 200);
+    }
+
+
+    public function showIssueForm(Project $project)
+    {
+        $statuses = Status::all();
+        $priorities = Priority::all();
+        $users = $project->members;
+        $form = view('modals.addIssueToProjectForm', compact('statuses', 'priorities', 'users', 'project'))->render();
+        return response()->json([
+            'form' => $form
         ], 200);
     }
 

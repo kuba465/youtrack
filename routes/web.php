@@ -23,6 +23,7 @@ Route::prefix('/project')->name('project.')->group(function () {
     Route::post('/{project}/addMember/{member?}', 'ProjectController@addMember')->name('addMember');
     Route::post('/{project}/addMemberForm', 'ProjectController@addMemberForm')->name('addMember.form');
     Route::post('/{project}/getDeleteMemberLink/{member}', 'ProjectController@getDeleteMemberLink')->name('getDeleteMemberLink');
+    Route::post('{project}/showIssueForm', 'ProjectController@showIssueForm')->name('showIssueForm');
     Route::delete('/{project}/deleteMember/{member}', 'ProjectController@deleteMember')->name('deleteMember');
 });
 
@@ -41,6 +42,7 @@ Route::prefix('/issue')->name('issue.')->group(function () {
     Route::post('/{issue}/editDescription', 'IssueController@editDescription')->name('editDescription');
     Route::post('/{issue}/edit', 'IssueController@edit')->name('edit');
     Route::post('/{issue}/editForm', 'IssueController@editForm')->name('editForm');
+    Route::post('/{project}/addIssueToProject', 'IssueController@create')->name('addIssueToProject');
     Route::get('/{issue}/delete', 'IssueController@delete')->name('delete');
 });
 

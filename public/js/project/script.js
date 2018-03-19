@@ -10,6 +10,8 @@ $(function () {
     $('#addMemberBtn').click(putFormInMemberModal);
     $('#deleteMember').click(deleteMember);
     $('#issuesOfProject tbody').on('click', 'tr.issueInProject', redirectToIssue);
+    $('#addIssueBtn').click(addIssueForm);
+    $('#saveIssueFromProject').click(createIssueFromProject);
 });
 
 function editProject() {
@@ -118,4 +120,44 @@ function deleteMember() {
 function redirectToIssue() {
     var url = $(this).attr('data-url');
     window.location = url;
+}
+
+function addIssueForm() {
+    $.ajax({
+        method: "POST",
+        url: $(this).attr('data-url')
+    }).done(function (form) {
+        $('#createIssueFromProjectModalBody').html(form.form);
+    });
+}
+
+function createIssueFromProject() {
+    var formDatas = $('form#addIssueToProject').serializeArray().reduce(function (obj, item) {
+        obj[item.name] = item.value;
+        return obj;
+    }, {});
+    var url = $(this).attr('data-save');
+    formDatas.project = $('select[name="project"]').val();
+
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: {datas: formDatas}
+    }).done(function (datas) {
+        var tr = $('<tr></tr>');
+        tr.attr('data-url', datas.issueUrl);
+        tr.addClass('issueInProject');
+
+        $.each(datas, function (index, value) {
+            if (index == 'issueUrl') {
+                return true;
+            }
+            var td = $('<td></td>');
+            td.text(value);
+            td.appendTo(tr);
+        });
+
+        tr.appendTo($('tbody#issues'));
+        $('#createIssueFromProjectForm').modal('hide');
+    });
 }

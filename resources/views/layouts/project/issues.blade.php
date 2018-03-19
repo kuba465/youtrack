@@ -1,11 +1,13 @@
 <table class="table" id="issuesOfProject">
     <thead>
         <tr>
-            <th colspan="2" class="text-center">
+            <th colspan="7" class="text-center">
                 Issues
                 @if(auth()->user()->can('add.issue.to.project'))
                     <div class="float-right">
-                        <button id="addIssue" class="btn btn-success btn-sm">
+                        <button id="addIssueBtn" class="btn btn-success btn-sm"
+                                data-url="{{route('project.showIssueForm', ['project' => $project])}}"
+                                class="btn btn-success btn-md" data-toggle="modal" data-target="#createIssueFromProjectForm">
                             Add Issue
                         </button>
                     </div>
@@ -13,7 +15,7 @@
             </th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="issues">
         <tr>
             <th>Title</th>
             <th>Description</th>
@@ -40,3 +42,4 @@
         @endforelse
     </tbody>
 </table>
+@include('modals.createIssueFromProject')
