@@ -22,5 +22,9 @@ return [
     'project' => [
         'no_members' => 'There are no members',
         'no_issues' => 'There are no issues'
+    ],
+
+    'comment' => [
+        'no_comments' => 'There are no comments'
     ]
 ];

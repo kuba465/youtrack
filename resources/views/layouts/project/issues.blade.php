@@ -36,7 +36,7 @@
                 <td>{{$issue->updated_at}}</td>
             </tr>
         @empty
-            <tr>
+            <tr id="no_issues">
                 <td colspan="2">@lang('main.project.no_issues')</td>
             </tr>
         @endforelse

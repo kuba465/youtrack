@@ -174,12 +174,6 @@ class IssueController extends Controller
         ], 200);
     }
 
-
-    public function addIssueToProject(Project $project)
-    {
-
-    }
-
     /**
      * @param Issue $issue
      * @return \Illuminate\Http\RedirectResponse

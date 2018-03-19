@@ -124,7 +124,10 @@ class ProjectController extends Controller
         ], 200);
     }
 
-
+    /**
+     * @param Project $project
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function showIssueForm(Project $project)
     {
         $statuses = Status::all();

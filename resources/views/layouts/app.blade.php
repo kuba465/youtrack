@@ -81,6 +81,7 @@
     <script src="{{ asset('js/user/script.js') }}"></script>
     <script src="{{ asset('js/issue/script.js') }}"></script>
     <script src="{{ asset('js/project/script.js') }}"></script>
+    <script src="{{ asset('js/comment/script.js') }}"></script>
 </body>
 </html>
 

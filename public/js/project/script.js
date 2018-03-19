@@ -144,6 +144,7 @@ function createIssueFromProject() {
         url: url,
         data: {datas: formDatas}
     }).done(function (datas) {
+        $('#no_issues').remove();
         var tr = $('<tr></tr>');
         tr.attr('data-url', datas.issueUrl);
         tr.addClass('issueInProject');

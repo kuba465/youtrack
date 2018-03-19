@@ -45,17 +45,25 @@ class Issue extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function scopeUserIssues($query, User $user)
     {
         if ($user->hasRole('admin')) {
-            return $query = Issue::orderBy('priority_id', 'desc')->get();
+            return $query = Issue::orderBy('updated_at', 'desc')->get();
         } else {
             $query = Issue::whereIn('project_id', $user->projects);
             if ($user->hasRole('project_member')) {
                 //TODO: why this query put name of project instead of user id?
 //                $query->where('user_id', '=', $user->id);
             }
-            return $query->orderBy('priority_id', 'desc')->get();
+            return $query->orderBy('updated_at', 'desc')->get();
         }
     }
 

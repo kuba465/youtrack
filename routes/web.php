@@ -50,3 +50,11 @@ Route::prefix('/admin')->middleware('role:admin')->group(function () {
     Route::resource('permission', 'Admin\\PermissionController');
     Route::resource('role', 'Admin\\RoleController');
 });
+
+Route::prefix('/comment')->name('comment.')->group(function () {
+    Route::post('{issue}/create', 'CommentController@create')->name('create');
+    Route::post('{comment}/edit', 'CommentController@edit')->name('edit');
+    Route::post('{comment}/getText', 'CommentController@getTextOfComment')->name('getText');
+    Route::delete('{comment}/delete', 'CommentController@delete')->name('delete');
+    Route::post('{comment}/getDeleteLink', 'CommentController@getDeleteLink')->name('getDeleteLink');
+});
