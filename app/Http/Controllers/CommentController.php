@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    /**
+     * @param Request $request
+     * @param Issue $issue
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create(Request $request, Issue $issue)
     {
         $validatedDatas = $request->validate([
@@ -30,6 +35,11 @@ class CommentController extends Controller
         ], 200);
     }
 
+    /**
+     * @param Request $request
+     * @param Comment $comment
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function edit(Request $request, Comment $comment)
     {
         $validatedDatas = $request->validate([
@@ -46,6 +56,10 @@ class CommentController extends Controller
         ], 200);
     }
 
+    /**
+     * @param Comment $comment
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getTextOfComment(Comment $comment)
     {
         return response()->json([
@@ -54,6 +68,10 @@ class CommentController extends Controller
         ]);
     }
 
+    /**
+     * @param Comment $comment
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getDeleteLink(Comment $comment)
     {
         return response()->json([
@@ -61,6 +79,11 @@ class CommentController extends Controller
         ]);
     }
 
+    /**
+     * @param Comment $comment
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function delete(Comment $comment)
     {
         $commentId = $comment->id;

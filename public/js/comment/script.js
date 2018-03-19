@@ -19,6 +19,7 @@ function createComment() {
         url: url,
         data: {description: text.val()}
     }).done(function (datas) {
+        $('#no_comments').remove();
         var tr = $('<tr></tr>');
         tr.attr('data-comment', datas.commentId);
         var td = $('<td></td>');

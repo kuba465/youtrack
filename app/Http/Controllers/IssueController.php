@@ -183,6 +183,8 @@ class IssueController extends Controller
     {
         $project = $issue->project;
         $issue->delete();
-        return redirect()->route('project.details', ['project' => $project]);
+        return response()->json([
+            'project' => route('project.details', ['project' => $project])
+        ]);
     }
 }

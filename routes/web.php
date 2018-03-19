@@ -19,7 +19,7 @@ Route::prefix('/project')->name('project.')->group(function () {
     Route::get('/{project}', 'ProjectController@details')->name('details');
     Route::post('/create', 'ProjectController@create')->name('create')->middleware('role:admin');
     Route::post('/edit', 'ProjectController@edit')->name('edit')->middleware('permission:edit.project');
-    Route::get('/delete/{project}', 'ProjectController@delete')->name('delete')->middleware('permission:delete.project');
+    Route::delete('/delete/{project}', 'ProjectController@delete')->name('delete')->middleware('permission:delete.project');
     Route::post('/{project}/addMember/{member?}', 'ProjectController@addMember')->name('addMember');
     Route::post('/{project}/addMemberForm', 'ProjectController@addMemberForm')->name('addMember.form');
     Route::post('/{project}/getDeleteMemberLink/{member}', 'ProjectController@getDeleteMemberLink')->name('getDeleteMemberLink');
@@ -43,7 +43,7 @@ Route::prefix('/issue')->name('issue.')->group(function () {
     Route::post('/{issue}/edit', 'IssueController@edit')->name('edit');
     Route::post('/{issue}/editForm', 'IssueController@editForm')->name('editForm');
     Route::post('/{project}/addIssueToProject', 'IssueController@create')->name('addIssueToProject');
-    Route::get('/{issue}/delete', 'IssueController@delete')->name('delete');
+    Route::delete('/{issue}/delete', 'IssueController@delete')->name('delete');
 });
 
 Route::prefix('/admin')->middleware('role:admin')->group(function () {

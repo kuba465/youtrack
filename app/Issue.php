@@ -53,6 +53,11 @@ class Issue extends Model
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * @param $query
+     * @param User $user
+     * @return mixed
+     */
     public function scopeUserIssues($query, User $user)
     {
         if ($user->hasRole('admin')) {

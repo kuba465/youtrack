@@ -2,13 +2,13 @@
     <thead>
         <tr>
             <th colspan="2" class="text-center">
-                My Projects
+                @lang('main.project.project_plural')
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <th>Name</th>
+            <th>@lang('main.project.name')</th>
         </tr>
             @forelse($user->projects as $project)
                 <tr>

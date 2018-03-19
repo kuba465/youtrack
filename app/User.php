@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $query;
     }
 
+    /**
+     * @param $query
+     * @param User $user
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function scopeUsersVisibleForAuthUser($query, User $user)
     {
         if ($user->hasRole('admin')) {

@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit user</h5>
+                <h5 class="modal-title">@lang('main.user.edit')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,26 +11,26 @@
                 <form action="{{route('user.create')}}" method="post">
                     {{csrf_field()}}
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="Enter name" required>
+                        <label for="name">@lang('main.user.name')</label>
+                        <input type="text" name="name" class="form-control" placeholder="@lang('main.user.form.name_placeholder')" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" name="email" class="form-control" placeholder="Enter e-mail" required>
+                        <label for="email">@lang('main.user.email')</label>
+                        <input type="email" name="email" class="form-control" placeholder="@lang('main.user.form.email_placeholder')" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="Enter password"
+                        <label for="password">@lang('main.user.password')</label>
+                        <input type="password" name="password" class="form-control" placeholder="@lang('main.user.form.password_placeholder')"
                                required>
                     </div>
                     <div class="form-group">
-                        <label for="password-confirm">Confirm password</label>
+                        <label for="password-confirm">@lang('main.user.password_confirmation')</label>
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                               placeholder="Confirm password" required>
+                               placeholder="@lang('main.user.form.password_confirmation_placeholder')" required>
                     </div>
                     @if(auth()->user()->can('create.projectManager'))
                         <div class="form-group">
-                            <label for="userType">Choose type of user</label>
+                            <label for="userType">@lang('main.user.form.role')</label>
                             <select name="userType" class="form-control">
                                 @foreach($roles as $role)
                                     <option value="{{$role->name}}">{{$role->description}}</option>
@@ -41,8 +41,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" id="saveUserChanges" data-save="{{route('user.edit', ['user' => $user])}}" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('main.buttons.close')</button>
+                <button type="submit" id="saveUserChanges" data-save="{{route('user.edit', ['user' => $user])}}" class="btn btn-primary">@lang('main.buttons.save')</button>
             </div>
         </div>
     </div>

@@ -12,6 +12,7 @@ $(function () {
     $('#issuesOfProject tbody').on('click', 'tr.issueInProject', redirectToIssue);
     $('#addIssueBtn').click(addIssueForm);
     $('#saveIssueFromProject').click(createIssueFromProject);
+    $('#deleteProject').click(deleteProject);
 });
 
 function editProject() {
@@ -160,5 +161,15 @@ function createIssueFromProject() {
 
         tr.appendTo($('tbody#issues'));
         $('#createIssueFromProjectForm').modal('hide');
+    });
+}
+
+function deleteProject() {
+    var url = $(this).attr('data-delete');
+    $.ajax({
+        method: "DELETE",
+        url: url
+    }).done(function (datas) {
+        window.location = datas.home;
     });
 }

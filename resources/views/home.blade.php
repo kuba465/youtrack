@@ -7,11 +7,11 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-header">
-                        @lang('main.home.projects')
+                        @lang('main.project.project_plural')
                         @if(auth()->user()->can('add.project'))
                             <div class="float-right">
                                 <button id="addProject" class="btn btn-success btn-md" data-toggle="modal" data-target="#addProjectForm">
-                                    Add Project
+                                    @lang('main.project.create')
                                 </button>
                             </div>
                         @endif
@@ -23,7 +23,7 @@
                                 {{$loop->iteration}}. {{$project->name}}
                             </a>
                         @empty
-                            @lang('main.home.no_projects')
+                            @lang('main.project.no_projects')
                         @endforelse
                     </div>
                 </div>
@@ -33,10 +33,10 @@
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-header">
-                            @lang('main.home.users')
+                            @lang('main.user.user_plural')
                             <div class="float-right">
                                 <button id="createUserBtn" class="btn btn-success btn-md" data-toggle="modal" data-target="#createUserForm">
-                                    Create User
+                                    @lang('main.user.create')
                                 </button>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                     {{$loop->iteration}}. {{$user->name}}
                                 </a>
                             @empty
-                                @lang('main.home.no_users')
+                                @lang('main.user.no_users')
                             @endforelse
                         </div>
                     </div>
@@ -57,11 +57,11 @@
             @if(auth()->user()->hasRole('project_member')) <div class="col-md-9"> @else <div class="col-md-6"> @endif
                 <div class="card">
                     <div class="card-header">
-                        @lang('main.home.issues')
+                        @lang('main.issue.issue_plural')
                         <div class="float-right">
                             <button id="createIssueBtn" data-url="{{route('issue.createForm', ['authUser' => auth()->user()])}}"
                                     class="btn btn-success btn-md" data-toggle="modal" data-target="#createIssueForm">
-                                Create Issue
+                                @lang('main.issue.create')
                             </button>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                                 {{$loop->iteration}}. <strong>{{$issue->title}}</strong>({{$issue->status->name}}/{{$issue->priority->name}})
                             </a>
                         @empty
-                            @lang('main.home.no_issues')
+                            @lang('main.issue.no_issues')
                         @endforelse
                     </div>
                 </div>

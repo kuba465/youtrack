@@ -51,7 +51,7 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('user.details', ['user' => auth()->user()]) }}">
-                                        @lang('main.user.myDetails')
+                                        @lang('main.user.profile')
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

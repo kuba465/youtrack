@@ -2,11 +2,11 @@
     <thead>
         <tr>
             <th colspan="2" class="text-center">
-                Description
+                @lang('main.issue.description')
                 <div class="float-right">
                     <button class="btn btn-success btn-sm" id="editDescriptionBtn"
                             data-url="{{route('issue.editDescription', ['issue' => $issue])}}" data-toggle="modal" data-target="#editIssueDescriptionForm">
-                        Edit description
+                        @lang('main.issue.edit_description')
                     </button>
                 </div>
             </th>
@@ -15,7 +15,7 @@
     <tbody id="members">
         <tr>
             <td class="w-75" id="issueDescription">{{$issue->description}}</td>
-            <th class="w-25">Files</th>
+            <th class="w-25">@lang('main.issue.files')</th>
         </tr>
     </tbody>
 </table>

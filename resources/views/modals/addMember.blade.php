@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add member</h5>
+                <h5 class="modal-title">@lang('main.project.member.add')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,9 +11,9 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('main.buttons.close')</button>
                 <button type="submit" id="addMember" data-save="{{route('project.addMember', ['project' => $project->id])}}" class="btn btn-primary">
-                    Add member
+                    @lang('main.project.member.add')
                 </button>
             </div>
         </div>

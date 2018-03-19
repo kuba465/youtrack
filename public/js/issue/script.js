@@ -10,6 +10,7 @@ $(function () {
     $('#editIssueBtn').click(putFormInEditIssueModal);
     $('#saveIssueChanges').click(editIssue);
     $('#saveIssueDescription').click(editIssueDescription);
+    $('#deleteIssue').click(deleteIssue);
 });
 
 function createIssue() {
@@ -113,5 +114,15 @@ function editIssueDescription() {
         description.val(datas.description);
         $('#issueDescription').text(datas.description);
         $('#editIssueDescriptionForm').modal('hide');
+    });
+}
+
+function deleteIssue() {
+    var url = $(this).attr('data-delete');
+    $.ajax({
+        method: "DELETE",
+        url: url
+    }).done(function (datas) {
+        window.location = datas.project;
     });
 }

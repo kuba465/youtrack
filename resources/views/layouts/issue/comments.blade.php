@@ -2,10 +2,10 @@
     <thead>
         <tr>
             <th colspan="4" class="text-center">
-                Comments
+                @lang('main.comment.title')
                 <div class="float-right">
                     <button id="createCommentBtn" class="btn btn-success btn-sm" data-toggle="modal" data-target="#createCommentForm">
-                        Add comment
+                        @lang('main.comment.add')
                     </button>
                 </div>
             </th>
@@ -13,9 +13,9 @@
     </thead>
     <tbody id="comments">
         <tr>
-            <th class="w-25">Author</th>
-            <th class="w-75">Description</th>
-            <th class="w-25">Updated at</th>
+            <th class="w-25">@lang('main.comment.author')</th>
+            <th class="w-75">@lang('main.comment.description')</th>
+            <th class="w-25">@lang('main.global.updated_at')</th>
         </tr>
         @forelse($issue->comments as $comment)
             <tr data-comment="{{$comment->id}}">
@@ -27,11 +27,11 @@
                         <div class="float-right">
                             <button data-url="{{route('comment.getText', ['comment' => $comment])}}" class="btn btn-warning btn-sm"
                                     data-toggle="modal" data-target="#editCommentForm" onclick="textOfComment($(this))">
-                                Edit
+                                @lang('main.buttons.edit')
                             </button>
                             <button data-url="{{route('comment.getDeleteLink', ['comment' => $comment])}}" class="btn btn-danger btn-sm"
                                     data-toggle="modal" data-target="#deleteCommentForm" onclick="deleteCommentLink($(this))">
-                                Delete
+                                @lang('main.buttons.delete')
                             </button>
                         </div>
                     @endif

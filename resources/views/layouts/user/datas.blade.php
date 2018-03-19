@@ -2,32 +2,32 @@
     <thead>
         <tr>
             <th colspan="2" class="text-center">
-                My Datas
+                @lang('main.user.details')
                 <button id="editUserBtn" class="btn btn-primary float-right btn-sm">
-                    Edit
+                    @lang('main.buttons.edit')
                 </button>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <th>Name</th>
+            <th>@lang('main.user.name')</th>
             <td>{{$user->name}}</td>
         </tr>
         <tr>
-            <th>E-mail</th>
+            <th>@lang('main.user.email')</th>
             <td>{{$user->email}}</td>
         </tr>
         <tr>
-            <th>Created At</th>
+            <th>@lang('main.global.created_at')</th>
             <td>{{$user->created_at}}</td>
         </tr>
         <tr>
-            <th>Updated At</th>
+            <th>@lang('main.global.updated_at')</th>
             <td>{{$user->updated_at}}</td>
         </tr>
         <tr>
-            <th>Role</th>
+            <th>@lang('main.user.role')</th>
             <td>{{$user->roles[0]->description}}</td>
         </tr>
     </tbody>

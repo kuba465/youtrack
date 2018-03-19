@@ -72,7 +72,9 @@ class ProjectController extends Controller
     public function delete(Project $project)
     {
         $project->delete();
-        return redirect()->route('home');
+        return response()->json([
+            'home' => route('home')
+        ]);
     }
 
     /**
@@ -101,6 +103,7 @@ class ProjectController extends Controller
     /**
      * @param Project $project
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function addMemberForm(Project $project)
     {
@@ -127,6 +130,7 @@ class ProjectController extends Controller
     /**
      * @param Project $project
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Throwable
      */
     public function showIssueForm(Project $project)
     {
