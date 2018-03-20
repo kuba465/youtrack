@@ -15,8 +15,17 @@
     <tbody id="members">
         <tr>
             <td class="w-75" id="issueDescription">{{$issue->description}}</td>
-            <th class="w-25">@lang('main.issue.files')</th>
+            <th class="w-25" id="issueFiles">
+                @lang('main.issue.files.title')
+                <div class="float-right">
+                    <button class="btn btn-success btn-sm" id="addFilesBtn" data-toggle="modal" data-target="#addFilesForm">
+                        @lang('main.issue.files.add')
+                    </button>
+                </div>
+                <div class="files"></div>
+            </th>
         </tr>
     </tbody>
 </table>
 @include('modals.editIssueDescription')
+@include('modals.addFiles')

@@ -43,6 +43,7 @@ Route::prefix('/issue')->name('issue.')->group(function () {
     Route::post('/{issue}/edit', 'IssueController@edit')->name('edit');
     Route::post('/{issue}/editForm', 'IssueController@editForm')->name('editForm');
     Route::post('/{project}/addIssueToProject', 'IssueController@create')->name('addIssueToProject');
+    Route::post('{issue}/saveFiles', 'FileController@save')->name('files.save');
     Route::delete('/{issue}/delete', 'IssueController@delete')->name('delete');
 });
 

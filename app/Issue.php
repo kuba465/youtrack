@@ -54,6 +54,14 @@ class Issue extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
+
+    /**
      * @param $query
      * @param User $user
      * @return mixed

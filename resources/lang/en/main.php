@@ -1,10 +1,6 @@
 <?php
 
 return [
-    'dashboard' => [
-        'header' => 'Your projects'
-    ],
-
     'buttons' => [
         'edit' => 'Edit',
         'delete' => 'Delete',
@@ -84,7 +80,11 @@ return [
         'estimated_time' => 'Estimated time',
         'work_time' => 'Work time',
         'edit_description' => 'Edit description',
-        'files' => 'Files',
+        'files' => [
+            'title' => 'Files',
+            'add' => 'Add files',
+            'form_title' => 'Choose files(you can add few)'
+        ],
         'add' => 'Add issue',
         'deleting' => 'Issue deleting',
         'delete' => 'Delete issue',
