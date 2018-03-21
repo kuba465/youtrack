@@ -17,60 +17,65 @@ class PermissionTableSeeder extends Seeder
         $projectManager = Role::find(2);
         $projectMember = Role::find(3);
 
-        $permission = Permission::create(['name' => 'add.roles.and.permissions']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
+//        $permission = Permission::create(['name' => 'add.roles.and.permissions']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'add.members.to.project']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//        $projectManager->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'add.issue.to.project']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//        $projectManager->givePermissionTo($permission);
+//        $projectMember->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'add.project']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'edit.project']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//        $projectManager->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'delete.project']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'show.project']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//        $projectManager->givePermissionTo($permission);
+//        $projectMember->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'create.projectManager']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'create.projectMember']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//        $projectManager->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'remove.member.from.project']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//        $projectManager->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'edit.all.users']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//        $projectManager->givePermissionTo($permission);
+//
+//        $permission = Permission::create(['name' => 'show.users']);
+//        $permission->save();
+//        $admin->givePermissionTo($permission);
+//        $projectManager->givePermissionTo($permission);
 
-        $permission = Permission::create(['name' => 'add.members.to.project']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-        $projectManager->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'add.issue.to.project']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-        $projectManager->givePermissionTo($permission);
-        $projectMember->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'add.project']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'edit.project']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-        $projectManager->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'delete.project']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'show.project']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-        $projectManager->givePermissionTo($permission);
-        $projectMember->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'create.projectManager']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'create.projectMember']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-        $projectManager->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'remove.member.from.project']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-        $projectManager->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'edit.all.users']);
-        $permission->save();
-        $admin->givePermissionTo($permission);
-        $projectManager->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'show.users']);
+        $permission = Permission::create(['name' => 'delete.users']);
         $permission->save();
         $admin->givePermissionTo($permission);
         $projectManager->givePermissionTo($permission);

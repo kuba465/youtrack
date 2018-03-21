@@ -22,7 +22,38 @@
                         @lang('main.issue.files.add')
                     </button>
                 </div>
-                <div class="files"></div>
+                <div class="files">
+                    @forelse($files as $key => $value)
+                        <hr>
+                        <div class="row" data-file="{{$value['id']}}">
+                            @if(in_array($value['extension'], $images))
+                                <div class="col-md-9">
+                                    <img src="{{$value['url']}}" alt="{{$key}}">
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-danger btn-sm delete-file"
+                                            data-delete="{{route('files.delete', ['issue' => $issue, 'file' => $value['id']])}}"
+                                            data-message="@lang('main.issue.files.delete_message')">
+                                        @lang('main.issue.files.delete')
+                                    </button>
+                                </div>
+                            @else
+                                <div class="col-md-9">
+                                    <a href="{{$value['url']}}" class="btn btn-info" download>{{$key}}</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-danger btn-sm delete-file"
+                                            data-delete="{{route('files.delete', ['issue' => $issue, 'file' => $value['id']])}}"
+                                            data-message="@lang('main.issue.files.delete_message')">
+                                        @lang('main.issue.files.delete')
+                                    </button>
+                                </div>
+                            @endif
+                        </div>
+                    @empty
+                        @lang('main.issue.files.no_files')
+                    @endforelse
+                </div>
             </th>
         </tr>
     </tbody>

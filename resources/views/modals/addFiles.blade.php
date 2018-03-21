@@ -19,7 +19,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('main.buttons.close')</button>
                 <button type="submit" id="addFiles" class="btn btn-primary"
-                        data-save="{{route('issue.files.save', ['issue' => $issue->id])}}">
+                        data-save="{{route('files.save', ['issue' => $issue->id])}}">
                     @lang('main.issue.files.add')
                 </button>
             </div>

@@ -12,28 +12,19 @@
                     {{csrf_field()}}
                     <div class="form-group">
                         <label for="name">@lang('main.user.name')</label>
-                        <input type="text" name="name" class="form-control" placeholder="@lang('main.user.form.name_placeholder')" required>
+                        <input type="text" name="name" class="form-control" value="{{$user->name}}" placeholder="@lang('main.user.form.name_placeholder')" required>
                     </div>
                     <div class="form-group">
                         <label for="email">@lang('main.user.email')</label>
-                        <input type="email" name="email" class="form-control" placeholder="@lang('main.user.form.email_placeholder')" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">@lang('main.user.password')</label>
-                        <input type="password" name="password" class="form-control" placeholder="@lang('main.user.form.password_placeholder')"
-                               required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password-confirm">@lang('main.user.password_confirmation')</label>
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                               placeholder="@lang('main.user.form.password_confirmation_placeholder')" required>
+                        <input type="email" name="email" class="form-control" value="{{$user->email}}" placeholder="@lang('main.user.form.email_placeholder')" required>
                     </div>
                     @if(auth()->user()->can('create.projectManager'))
                         <div class="form-group">
                             <label for="userType">@lang('main.user.form.role')</label>
                             <select name="userType" class="form-control">
                                 @foreach($roles as $role)
-                                    <option value="{{$role->name}}">{{$role->description}}</option>
+                                    {{$role->name}} {{$user->roles->pluck('name')}}
+                                    <option value="{{$role->name}}" {{$user->roles[0]->name == $role->name ? 'selected' : ''}}>{{$role->description}}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -6,6 +6,8 @@ $(function () {
     });
 
     $('#createUser').click(createUser);
+    $('#saveUserChanges').click(editUser);
+    $('#deleteUser').click(deleteUser);
 });
 
 function createUser() {
@@ -14,7 +16,7 @@ function createUser() {
     var email = form.find('input[name="email"]');
     var password = form.find('input[name="password"]');
     var passwordConfirmation = form.find('input[name="password_confirmation"]');
-    var userType = form.find('select');
+    var userType = form.find('select[name="userType"]');
     var url = $(this).attr('data-save');
 
     $.ajax({
@@ -42,5 +44,44 @@ function createUser() {
         button.appendTo($('#users'));
 
         $('#createUserForm').modal('hide');
+    });
+}
+
+function editUser() {
+    var form = $('#editUserForm').find('form');
+    var name = form.find('input[name="name"]');
+    var email = form.find('input[name="email"]');
+    var userType = form.find('select[name="userType"]');
+    var url = $(this).attr('data-save');
+
+    console.log(userType);
+
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: {
+            name: name.val(),
+            email: email.val(),
+            userType: userType.val()
+        }
+    }).done(function (datas) {
+        name.val(datas.name);
+        email.val(datas.email);
+        userType.find('option[value="' + datas.role + '"]').attr('selected', 'selected');
+
+        $('#userName').text(datas.name);
+        $('#userEmail').text(datas.email);
+        $('#userRole').text(datas.roleDescription);
+        $('#editUserForm').modal('hide');
+    });
+}
+
+function deleteUser() {
+    var url = $(this).attr('data-delete');
+    $.ajax({
+        method: "DELETE",
+        url: url
+    }).done(function (datas) {
+        window.location = datas.home;
     });
 }

@@ -3,20 +3,27 @@
         <tr>
             <th colspan="2" class="text-center">
                 @lang('main.user.details')
-                <button id="editUserBtn" class="btn btn-primary float-right btn-sm">
-                    @lang('main.buttons.edit')
-                </button>
+                <div class="float-right">
+                    <button id="editUserBtn" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editUserForm">
+                        @lang('main.user.edit')
+                    </button>
+                    @if(auth()->user()->can('delete.users'))
+                        <button id="deleteUserBtn" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteUserForm">
+                            @lang('main.user.delete')
+                        </button>
+                    @endif
+                </div>
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <th>@lang('main.user.name')</th>
-            <td>{{$user->name}}</td>
+            <td id="userName">{{$user->name}}</td>
         </tr>
         <tr>
             <th>@lang('main.user.email')</th>
-            <td>{{$user->email}}</td>
+            <td id="userEmail">{{$user->email}}</td>
         </tr>
         <tr>
             <th>@lang('main.global.created_at')</th>
@@ -28,7 +35,9 @@
         </tr>
         <tr>
             <th>@lang('main.user.role')</th>
-            <td>{{$user->roles[0]->description}}</td>
+            <td id="userRole">{{$user->roles[0]->description}}</td>
         </tr>
     </tbody>
 </table>
+@include('modals.editUser')
+@include('modals.deleteUser')

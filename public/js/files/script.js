@@ -6,6 +6,7 @@ $(function () {
     });
 
     $('#addFiles').click(saveFiles);
+    $('div.files').on('click', 'button.delete-file', deleteFile);
 });
 
 function saveFiles() {
@@ -18,23 +19,65 @@ function saveFiles() {
         contentType: false,
         processData: false
     }).done(function (datas) {
-        var files = $('div.files');
-        $.each(datas.files, function (key, value) {
-            var images = ['jpg', 'jpeg', 'png', 'gif'];
-            if ($.inArray(value.extension, images) >= 0) {
-                var img = $('<img>');
-                img.attr('src', value.url);
-                img.attr('alt', key);
-                img.appendTo(files);
-            } else {
-                var a = $('<a></a>');
-                a.addClass('btn btn-info');
-                a.attr('download', true);
-                a.attr('href', value.url);
-                a.text(key);
-                a.appendTo(files);
-            }
-        });
+        if (datas.count > 0) {
+            var files = $('div.files');
+
+            $.each(datas.files, function (key, value) {
+                $('<hr>').appendTo(files);
+
+                var row = $('<div></div>');
+                row.attr('data-file', value.id);
+                row.addClass('row');
+
+                var images = ['jpg', 'jpeg', 'png', 'gif'];
+                var divMd9 = $('<div></div>');
+                divMd9.addClass('col-md-9');
+
+                if ($.inArray(value.extension, images) >= 0) {
+                    var img = $('<img>');
+                    img.attr('src', value.url);
+                    img.attr('alt', key);
+                    img.appendTo(divMd9);
+                } else {
+                    var a = $('<a></a>');
+                    a.attr('href', value.url);
+                    a.addClass('btn btn-info');
+                    a.attr('download', true);
+                    a.text(key);
+                    a.appendTo(divMd9);
+                }
+
+                var divMd3 = $('<div></div>');
+                divMd3.addClass('col-md-3');
+
+                var button = $('<button></button>');
+                button.addClass('btn btn-danger btn-sm delete-file');
+                button.attr('data-delete', value.deleteUrl);
+                button.attr('data-message', datas.message);
+                button.text(datas.text);
+                button.appendTo(divMd3);
+
+                divMd9.appendTo(row);
+                divMd3.appendTo(row);
+                row.appendTo(files);
+            });
+        }
         $('#addFilesForm').modal('hide');
     });
+}
+
+function deleteFile() {
+    var url = $(this).attr('data-delete');
+    var confirm = window.confirm($(this).attr('data-message'));
+
+    if (confirm) {
+        $.ajax({
+            method: "DELETE",
+            url: url
+        }).done(function (datas) {
+            var divToRemove = $('div[data-file="' + datas.fileId + '"]');
+            divToRemove.prev().remove();
+            divToRemove.remove();
+        });
+    }
 }

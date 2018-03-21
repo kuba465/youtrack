@@ -30,8 +30,8 @@ Route::prefix('/project')->name('project.')->group(function () {
 Route::prefix('/user')->name('user.')->group(function () {
     Route::get('/{user}', 'UserController@details')->name('details');
     Route::post('/create', 'UserController@create')->name('create')->middleware('permission:create.projectMember');
-    Route::post('{user}/edit', 'UserController@edit')->name('edit');
-    Route::post('/{user}/editForm', 'UserController@editForm')->name('edit.form');
+    Route::post('/{user}/edit', 'UserController@edit')->name('edit');
+    Route::delete('/{user}/delete', 'UserController@delete')->name('delete');
 });
 
 Route::prefix('/issue')->name('issue.')->group(function () {
@@ -43,8 +43,12 @@ Route::prefix('/issue')->name('issue.')->group(function () {
     Route::post('/{issue}/edit', 'IssueController@edit')->name('edit');
     Route::post('/{issue}/editForm', 'IssueController@editForm')->name('editForm');
     Route::post('/{project}/addIssueToProject', 'IssueController@create')->name('addIssueToProject');
-    Route::post('{issue}/saveFiles', 'FileController@save')->name('files.save');
     Route::delete('/{issue}/delete', 'IssueController@delete')->name('delete');
+});
+
+Route::prefix('/files')->name('files.')->group(function () {
+    Route::post('/{issue}/saveFiles', 'FileController@save')->name('save');
+    Route::delete('/{issue}/deleteFile/{file}', 'FileController@delete')->name('delete');
 });
 
 Route::prefix('/admin')->middleware('role:admin')->group(function () {
@@ -53,9 +57,9 @@ Route::prefix('/admin')->middleware('role:admin')->group(function () {
 });
 
 Route::prefix('/comment')->name('comment.')->group(function () {
-    Route::post('{issue}/create', 'CommentController@create')->name('create');
-    Route::post('{comment}/edit', 'CommentController@edit')->name('edit');
-    Route::post('{comment}/getText', 'CommentController@getTextOfComment')->name('getText');
-    Route::delete('{comment}/delete', 'CommentController@delete')->name('delete');
-    Route::post('{comment}/getDeleteLink', 'CommentController@getDeleteLink')->name('getDeleteLink');
+    Route::post('/{issue}/create', 'CommentController@create')->name('create');
+    Route::post('/{comment}/edit', 'CommentController@edit')->name('edit');
+    Route::post('/{comment}/getText', 'CommentController@getTextOfComment')->name('getText');
+    Route::delete('/{comment}/delete', 'CommentController@delete')->name('delete');
+    Route::post('/{comment}/getDeleteLink', 'CommentController@getDeleteLink')->name('getDeleteLink');
 });

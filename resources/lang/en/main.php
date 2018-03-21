@@ -24,6 +24,9 @@ return [
         'password_confirmation' => 'Confirm password',
         'role' => 'Role',
         'profile' => 'My profile',
+        'deleting' => 'User deleting',
+        'delete' => 'Delete user',
+        'delete_message' => 'Do you really want to delete this user?',
         'no_projects' => 'You don\'t have any projects',
         'no_users' => 'There are no users',
         'form' => [
@@ -83,7 +86,10 @@ return [
         'files' => [
             'title' => 'Files',
             'add' => 'Add files',
-            'form_title' => 'Choose files(you can add few)'
+            'form_title' => 'Choose files(you can add few)',
+            'delete' => 'Delete',
+            'delete_message' => 'Do you really want to delete this file?',
+            'no_files' => ''
         ],
         'add' => 'Add issue',
         'deleting' => 'Issue deleting',

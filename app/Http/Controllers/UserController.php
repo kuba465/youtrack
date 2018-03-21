@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -13,7 +14,8 @@ class UserController extends Controller
      */
     public function details(User $user)
     {
-        return view('layouts.user.details', compact('user'));
+        $roles = Role::where('name', '<>', 'admin')->get();
+        return view('layouts.user.details', compact('user', 'roles'));
     }
 
     /**
@@ -39,6 +41,37 @@ class UserController extends Controller
         return response()->json([
             'name' => $user->name,
             'url' => route('user.details', ['user' => $user]),
+        ]);
+    }
+
+    public function edit(Request $request, User $user)
+    {
+        $validatedDatas = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        ]);
+
+        $user->name = $validatedDatas['name'];
+        $user->email = $validatedDatas['email'];
+        $user->save();
+        if (auth()->user()->can('create.projectManager')) {
+            $user->removeRole($user->roles[0]->name);
+            $user->assignRole($request['userType']);
+        }
+
+        return response()->json([
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $request['userType'],
+            'roleDescription' => Role::findByName($request['userType'])->description
+        ]);
+    }
+
+    public function delete(User $user)
+    {
+        $user->delete();
+        return response()->json([
+            'home' => route('home')
         ]);
     }
 }

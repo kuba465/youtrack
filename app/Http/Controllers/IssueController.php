@@ -9,6 +9,7 @@ use App\Status;
 use App\User;
 use Hamcrest\Core\Is;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class IssueController extends Controller
 {
@@ -18,7 +19,14 @@ class IssueController extends Controller
      */
     public function details(Issue $issue)
     {
-        return view('layouts.issue.details', compact('issue'));
+        $images = ['jpg', 'jpeg', 'png', 'gif'];
+        $files = [];
+        foreach ($issue->files as $file) {
+            $files[$file->name]['id'] = $file->id;
+            $files[$file->name]['url'] = Storage::disk('public')->url($file->path . '/' . $file->name);
+            $files[$file->name]['extension'] = $file->extension;
+        }
+        return view('layouts.issue.details', compact('issue', 'images', 'files'));
     }
 
     /**
