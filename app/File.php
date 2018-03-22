@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
-    const TOKEN = '2W4p3_RE1t8AAAAAAAAH2hdjcrQWEHs446_woitNRYPleLofksWMrbhsplO0cFqS';
-
     /**
      * @var array
      */
@@ -25,7 +23,12 @@ class File extends Model
         return $this->belongsTo(Issue::class);
     }
 
-    public static function saveFilesReturnArray(Request $request, Issue $issue)
+    /**
+     * @param Request $request
+     * @param Issue $issue
+     * @return array
+     */
+    public static function saveFilesReturnArray(Request $request, Issue $issue): array
     {
         $files = [];
         foreach ($request->all()['files'] as $file) {

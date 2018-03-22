@@ -8,6 +8,7 @@ $(function () {
     $('#createUser').click(createUser);
     $('#saveUserChanges').click(editUser);
     $('#deleteUser').click(deleteUser);
+    $('#addIssueBtn').click(putFormInIssueModalFromUser);
 });
 
 function createUser() {
@@ -74,6 +75,25 @@ function editUser() {
         $('#userRole').text(datas.roleDescription);
         $('#editUserForm').modal('hide');
     });
+}
+
+function putFormInIssueModalFromUser() {
+    $.ajax({
+        method: "POST",
+        url: $(this).attr('data-url')
+    }).done(function (form) {
+        $('#createIssueModalBody').html(form.form);
+        $('select[name="project"]').change(enableSubmitButton);
+    });
+}
+
+function enableSubmitButton() {
+    var projectId = $(this).val();
+    if (projectId > 0) {
+        $('#saveIssueFromUser').prop('disabled', false);
+    } else {
+        $('#saveIssueFromUser').prop('disabled', true);
+    }
 }
 
 function deleteUser() {

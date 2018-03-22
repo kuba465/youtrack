@@ -44,6 +44,11 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function edit(Request $request, User $user)
     {
         $validatedDatas = $request->validate([
@@ -67,6 +72,11 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function delete(User $user)
     {
         $user->delete();

@@ -73,15 +73,15 @@ class IssueController extends Controller
     }
 
     /**
-     * @param User $authUser
+     * @param User $user
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
      */
-    public function createForm(User $authUser)
+    public function createForm(User $user)
     {
         $statuses = Status::all();
         $priorities = Priority::all();
-        $projects = Project::projectsAvailableToUser($authUser);
+        $projects = Project::projectsAvailableToUser($user);
         $form = view('modals.createIssueForm', compact('statuses', 'priorities', 'projects'))->render();
 
         return response()->json([

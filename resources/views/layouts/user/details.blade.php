@@ -10,5 +10,10 @@
                 @include('layouts.user.projects')
             </div>
         </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                @include('layouts.user.issues')
+            </div>
+        </div>
     </div>
 @endsection

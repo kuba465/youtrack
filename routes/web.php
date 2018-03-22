@@ -31,12 +31,14 @@ Route::prefix('/user')->name('user.')->group(function () {
     Route::get('/{user}', 'UserController@details')->name('details');
     Route::post('/create', 'UserController@create')->name('create')->middleware('permission:create.projectMember');
     Route::post('/{user}/edit', 'UserController@edit')->name('edit');
+    Route::post('{user}/addIssueForm', 'IssueController@createForm')->name('addIssueForm');
+    Route::post('{user}/addIssue', 'UserController@addIssue')->name('addIssue');
     Route::delete('/{user}/delete', 'UserController@delete')->name('delete');
 });
 
 Route::prefix('/issue')->name('issue.')->group(function () {
     Route::get('/{issue}', 'IssueController@details')->name('details');
-    Route::post('/{authUser}/createForm', 'IssueController@createForm')->name('createForm');
+    Route::post('/{user}/createForm', 'IssueController@createForm')->name('createForm');
     Route::post('/ownerSelect/{project?}', 'IssueController@ownerSelect')->name('ownerSelect');
     Route::post('/create', 'IssueController@create')->name('create');
     Route::post('/{issue}/editDescription', 'IssueController@editDescription')->name('editDescription');
@@ -48,7 +50,7 @@ Route::prefix('/issue')->name('issue.')->group(function () {
 
 Route::prefix('/files')->name('files.')->group(function () {
     Route::post('/{issue}/saveFiles', 'FileController@save')->name('save');
-    Route::delete('/{issue}/deleteFile/{file}', 'FileController@delete')->name('delete');
+    Route::delete('deleteFile/{file}', 'FileController@delete')->name('delete');
 });
 
 Route::prefix('/admin')->middleware('role:admin')->group(function () {

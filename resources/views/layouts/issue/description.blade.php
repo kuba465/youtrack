@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <button class="btn btn-danger btn-sm delete-file"
-                                            data-delete="{{route('files.delete', ['issue' => $issue, 'file' => $value['id']])}}"
+                                            data-delete="{{route('files.delete', ['file' => $value['id']])}}"
                                             data-message="@lang('main.issue.files.delete_message')">
                                         @lang('main.issue.files.delete')
                                     </button>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <button class="btn btn-danger btn-sm delete-file"
-                                            data-delete="{{route('files.delete', ['issue' => $issue, 'file' => $value['id']])}}"
+                                            data-delete="{{route('files.delete', ['file' => $value['id']])}}"
                                             data-message="@lang('main.issue.files.delete_message')">
                                         @lang('main.issue.files.delete')
                                     </button>

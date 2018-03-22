@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
+    /**
+     * @param Request $request
+     * @param Issue $issue
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function save(Request $request, Issue $issue)
     {
         $files = File::saveFilesReturnArray($request, $issue);
@@ -22,7 +27,12 @@ class FileController extends Controller
         ], 200);
     }
 
-    public function delete(Issue $issue, File $file)
+    /**
+     * @param File $file
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function delete(File $file)
     {
         $fileId = $file->id;
         if (Storage::disk('public')->exists($file->path . '/' . $file->name)) {
